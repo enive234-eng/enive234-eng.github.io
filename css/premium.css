@@ -158,6 +158,28 @@ summary{list-style:none}summary::-webkit-details-marker{display:none}
 @media(max-width:640px){.gallery-hero{flex-direction:column}}
 .gallery-filter:empty{display:none}.gallery-fallback .gallery-open{cursor:default}.gallery-fallback .gallery-overlay i{font:italic .7rem var(--serif);transform:none}.gallery-fallback .gallery-open:hover .gallery-overlay i{transform:none}.dynamic-page[data-page="gallery"]>.gallery-results{background:#20231d}
 
+/* Practice-quality rail: composed and static on desktop, gently moving where
+   narrow screens cannot present the full line without clipping it. */
+.trust-rail{overflow:hidden}
+.trust-rail-track{display:flex;align-items:center;justify-content:center;width:100%}
+.trust-rail-group{display:flex;align-items:center;justify-content:center;gap:clamp(1rem,3vw,3rem);white-space:nowrap}
+.trust-rail-group[aria-hidden="true"]{display:none}
+@keyframes trust-rail-slide{to{transform:translateX(calc(-50% - .75rem))}}
+@media(max-width:1000px){
+  .trust-rail{justify-content:flex-start;padding-inline:0}
+  .trust-rail-track{width:max-content;justify-content:flex-start;gap:1.5rem;animation:trust-rail-slide 24s linear infinite;will-change:transform}
+  .trust-rail-group{flex:0 0 auto;justify-content:flex-start;gap:1rem;padding-left:1.5rem}
+  .trust-rail-group[aria-hidden="true"]{display:flex}
+  .trust-rail:hover .trust-rail-track,.trust-rail:active .trust-rail-track,.trust-rail:focus-within .trust-rail-track{animation-play-state:paused}
+}
+@media(prefers-reduced-motion:reduce){
+  .trust-rail{justify-content:flex-start;overflow-x:auto;scrollbar-width:none}
+  .trust-rail::-webkit-scrollbar{display:none}
+  .trust-rail-track{width:max-content;justify-content:flex-start;animation:none;transform:none}
+  .trust-rail-group{justify-content:flex-start}
+  .trust-rail-group[aria-hidden="true"]{display:none}
+}
+
 /* Desktop composition: keep the editorial rhythm intentional on wide laptop
    and large desktop canvases instead of allowing content to drift to the edges. */
 @media(min-width:1001px){
