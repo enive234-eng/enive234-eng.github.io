@@ -1,6 +1,6 @@
 import sharp from 'sharp';
 
-const src = 'assets/images/source/enive-hero-original.png';
+const src = 'assets/images/source/enive-hero-v2.png';
 const meta = await sharp(src).metadata();
 const width = Math.min(meta.width, 1920);
 
