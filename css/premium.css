@@ -157,3 +157,21 @@ summary{list-style:none}summary::-webkit-details-marker{display:none}
 @media(prefers-reduced-motion:reduce){.services-page .service-row:not([hidden]){animation:none}}
 @media(max-width:640px){.gallery-hero{flex-direction:column}}
 .gallery-filter:empty{display:none}.gallery-fallback .gallery-open{cursor:default}.gallery-fallback .gallery-overlay i{font:italic .7rem var(--serif);transform:none}.gallery-fallback .gallery-open:hover .gallery-overlay i{transform:none}.dynamic-page[data-page="gallery"]>.gallery-results{background:#20231d}
+
+/* Desktop composition: keep the editorial rhythm intentional on wide laptop
+   and large desktop canvases instead of allowing content to drift to the edges. */
+@media(min-width:1001px){
+  .hero-premium{column-gap:clamp(3.5rem,5vw,6rem)}
+  .hero-premium .hero-copy{align-self:center}
+  .hero-premium .hero-image{width:100%;max-width:760px;justify-self:end}
+  .hero-premium .hero-image img{object-position:center 43%}
+  .provider-premium,.journey,.consultation-convert,.home-faq{gap:clamp(4.5rem,7vw,7.5rem)}
+}
+@media(min-width:1760px){
+  :root{--pad:max(5rem,calc((100vw - 1600px)/2))}
+  .nav{column-gap:3rem}
+  .hero-premium{grid-template-columns:minmax(0,1fr) minmax(560px,.92fr);min-height:min(820px,calc(100svh - 115px))}
+  .hero-premium h1{font-size:clamp(6rem,5.3vw,7.8rem)}
+  .section{padding-top:clamp(7rem,8vw,9rem);padding-bottom:clamp(7rem,8vw,9rem)}
+  .services-hero,.gallery-hero{column-gap:clamp(5rem,7vw,8rem)}
+}

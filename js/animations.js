@@ -8,7 +8,7 @@ const finePointer = matchMedia('(hover:hover) and (pointer:fine)').matches;
 
 /* ---------- Scroll reveal + stagger ---------- */
 
-const SOLO_SELECTORS = ['.editorial-image', '.editorial-copy', '.provider-card', '.provider-copy',
+const SOLO_SELECTORS = ['.hero-copy', '.editorial-image', '.editorial-copy', '.provider-card', '.provider-copy',
   '.concierge-panel', '.detail-hero-mark', '.detail-aside', '.hero-image', '.section-head',
   '.provider-public-profile>img', '.provider-public-profile>div', '.promotion-feature>img',
   '.promotion-feature>div', '.services-hero-visual', '.detail-hero-copy', '.page-hero .eyebrow',
