@@ -1,0 +1,6 @@
+# Netlify redirects/rewrites for the ENIVÈ site.
+# Clean blog article URLs: /blog/my-post -> pages/blog-post.html (slug read from the URL by js/app.js)
+/blog/*   /pages/blog-post.html   200
+
+# Custom 404 (Netlify serves this automatically for unmatched paths, this is an explicit fallback)
+/*   /404.html   404
