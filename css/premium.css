@@ -165,6 +165,8 @@ summary{list-style:none}summary::-webkit-details-marker{display:none}
   .hero-premium .hero-copy{align-self:center}
   .hero-premium .hero-image{width:100%;max-width:760px;justify-self:end}
   .hero-premium .hero-image img{object-position:center 43%}
+  .hero-premium .image-note{left:1.25rem;bottom:1.25rem;max-width:calc(100% - 10rem);padding:.72rem 1rem;border-left:2px solid var(--terra);background:rgba(255,253,248,.94);box-shadow:0 12px 30px rgba(38,36,31,.1);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+  .hero-premium .hero-seal{right:1.25rem;bottom:1.25rem;width:104px;height:104px}
   .provider-premium,.journey,.consultation-convert,.home-faq{gap:clamp(4.5rem,7vw,7.5rem)}
 }
 @media(min-width:1760px){
