@@ -189,3 +189,11 @@ body{animation:page-fade-in .5s var(--ease-out)}
   .footer-compact .footer-col{min-width:0}.footer-compact .footer-col h3{margin-bottom:.65rem}.footer-compact .footer-col a{font-size:.7rem}.footer-compact .footer-col a span{width:1.35rem;height:1.35rem;flex:0 0 auto;font-size:.55rem}
   .footer-compact .footer-bottom{gap:1rem;padding:1rem 0 2rem}.footer-compact .footer-bottom>span{color:#b0afa8}.footer-compact .footer-bottom nav{row-gap:.6rem}
 }
+
+/* Warm neutral brand refresh: nude foundations, terracotta accents, no green. */
+:root{--ivory:#f8f3ec;--white:#fffaf4;--sand:#eadccf;--taupe:#9a8174;--terra:#ad654f;--olive:#8b6256;--ink:#2d2521;--gold:#b88c71}
+.announcement{background:#8b6256}
+.provider-card,.service-guidance,.cta-premium,.editorial-feature{background:#8b6256}.site-footer,.footer-compact{background-color:#2d2521;background-image:radial-gradient(circle at 88% 2%,rgba(173,101,79,.19),transparent 25rem),linear-gradient(145deg,rgba(154,129,116,.12),transparent 48%)}.provider-premium:before{color:rgba(173,101,79,.065)}
+.premium-home .pathways,.premium-home .journey{position:relative;isolation:isolate;overflow:hidden}.premium-home .pathways:after,.premium-home .journey:after{content:"ENIVÈ";position:absolute;z-index:-1;right:-.06em;bottom:-.25em;color:rgba(173,101,79,.055);font:400 clamp(9rem,22vw,22rem)/1 var(--serif);letter-spacing:.05em;pointer-events:none}
+.services-page .service-row[data-care="guidance"]{background-color:#9b6a5c;background-image:radial-gradient(circle at 92% 15%,rgba(244,220,205,.18),transparent 17rem)}.services-page .service-row[data-care="concierge"]{background-color:#332723;background-image:linear-gradient(120deg,rgba(173,101,79,.22),transparent 55%)}
+.gallery-results,.dynamic-page[data-page="gallery"]>.gallery-results,.gallery-lightbox{background:#302521}.before-after-pair{background:#392b26}.stories-hero{background:#e8d8cc;background-image:radial-gradient(circle at 76% 12%,rgba(255,250,244,.62),transparent 22rem)}.stories-grid blockquote:nth-child(4n+2){background:#ead8cd}

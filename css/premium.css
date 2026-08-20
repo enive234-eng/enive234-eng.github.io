@@ -155,8 +155,16 @@ summary{list-style:none}summary::-webkit-details-marker{display:none}
   .services-page .service-row[data-care="guidance"],.services-page .service-row[data-care="concierge"]{min-height:360px;padding:1.65rem}.services-page .service-row[data-care="guidance"] h2,.services-page .service-row[data-care="concierge"] h2{font-size:3.15rem}.services-page .service-row[data-care="guidance"]:before,.services-page .service-row[data-care="concierge"]:before{width:260px;height:260px}
 }
 @media(prefers-reduced-motion:reduce){.services-page .service-row:not([hidden]){animation:none}}
+
+/* Final palette pass for pages that load the premium layer after core styles. */
+.provider-card,.service-guidance,.cta-premium,.editorial-feature{background:#8b6256}
+.provider-premium:before{color:rgba(173,101,79,.065)}
+.services-page .service-row[data-care="guidance"]{background-color:#9b6a5c;background-image:radial-gradient(circle at 92% 15%,rgba(244,220,205,.18),transparent 17rem)}
+.services-page .service-row[data-care="concierge"]{background-color:#332723;background-image:linear-gradient(120deg,rgba(173,101,79,.22),transparent 55%)}
+.gallery-results,.dynamic-page[data-page="gallery"]>.gallery-results,.gallery-lightbox{background:#302521}.before-after-pair{background:#392b26}
+.stories-hero{background:#e8d8cc;background-image:radial-gradient(circle at 76% 12%,rgba(255,250,244,.62),transparent 22rem)}.stories-hero:before{color:rgba(173,101,79,.08)}.stories-seal{border-color:rgba(173,101,79,.3)}.stories-grid blockquote:nth-child(4n+2){background:#ead8cd}
 @media(max-width:640px){.gallery-hero{flex-direction:column}}
-.gallery-filter:empty{display:none}.gallery-fallback .gallery-open{cursor:default}.gallery-fallback .gallery-overlay i{font:italic .7rem var(--serif);transform:none}.gallery-fallback .gallery-open:hover .gallery-overlay i{transform:none}.dynamic-page[data-page="gallery"]>.gallery-results{background:#20231d}
+.gallery-filter:empty{display:none}.gallery-fallback .gallery-open{cursor:default}.gallery-fallback .gallery-overlay i{font:italic .7rem var(--serif);transform:none}.gallery-fallback .gallery-open:hover .gallery-overlay i{transform:none}.dynamic-page[data-page="gallery"]>.gallery-results{background:#302521}
 
 /* Practice-quality rail: composed and static on desktop, gently moving where
    narrow screens cannot present the full line without clipping it. */
