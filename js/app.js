@@ -552,13 +552,17 @@ async function renderServiceExperience() {
           ${treatments
             .map(
               ([name], index) => `
-                <button type="button" data-treatment-index="${index}" aria-pressed="${index === 0}">
+                <button type="button" data-treatment-index="${index}" aria-pressed="${index === 0}" aria-expanded="${index === 0}" aria-controls="mobile-treatment-${index}">
                   <span>${escapeHtml(name)}</span><i aria-hidden="true">→</i>
                 </button>
+                <div class="mobile-treatment-disclosure" id="mobile-treatment-${index}"${index === 0 ? "" : " hidden"}>
+                  <span>Investment</span><strong>${escapeHtml(treatments[index][1])}</strong>
+                </div>
               `,
             )
             .join("")}
         </div>
+        <a class="btn mobile-treatment-book" href="${BOOKING_URL}" target="_blank" rel="noopener">Book a consultation</a>
       </div>
       <article class="service-experience-detail" aria-live="polite">
         <p class="eyebrow">Treatment 01</p>
@@ -623,9 +627,15 @@ async function renderServiceExperience() {
       const [name, price, , description] = treatments[index];
       root
         .querySelectorAll("[data-treatment-index]")
-        .forEach((item) =>
-          item.setAttribute("aria-pressed", String(item === button)),
-        );
+        .forEach((item) => {
+          const selected = item === button;
+          item.setAttribute("aria-pressed", String(selected));
+          item.setAttribute("aria-expanded", String(selected));
+          const disclosure = root.querySelector(
+            `#${item.getAttribute("aria-controls")}`,
+          );
+          if (disclosure) disclosure.hidden = !selected;
+        });
       root.querySelector(".service-experience-detail .eyebrow").textContent =
         `Treatment ${String(index + 1).padStart(2, "0")}`;
       root.querySelector("[data-treatment-name]").textContent = name;
