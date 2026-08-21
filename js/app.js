@@ -18,6 +18,8 @@ import {
 import { initAnimations } from "./animations.js";
 const header = document.querySelector("#site-header"),
   footer = document.querySelector("#site-footer");
+if (document.querySelector(".service-detail"))
+  document.body.classList.add("service-detail-page");
 const footerIcon = (kind) => {
   const paths = {
     arrow: '<path d="M5 12h14M13 6l6 6-6 6"/>',
