@@ -819,7 +819,9 @@ function enhanceEditorialPage(root, view) {
   if (view === "gallery")
     root.innerHTML = `<header class="gallery-hero"><div><p class="eyebrow">The ENIVÈ gallery</p><h1>Details worth<br><em>remembering.</em></h1><p>A visual journal of our space, our approach and client-approved results—curated with the same care as every visit.</p></div><div class="gallery-hero-mark" aria-hidden="true"><span>Visual journal</span><strong>É</strong><small>Sugar Land · Texas</small></div></header><section class="section gallery-journal"><div class="gallery-intro"><div><p class="eyebrow">Inside ENIVÈ</p><h2>A considered<br><em>point of view.</em></h2></div><p>Explore the quiet details, thoughtful treatments and personal moments that shape the ENIVÈ experience.</p></div><div class="gallery-filter" id="gallery-filter" aria-label="Filter gallery"></div><div class="gallery-grid gallery-bento" id="gallery-grid"><figure class="gallery-photo gallery-featured gallery-fallback"><div class="gallery-open"><img data-gallery-design="studio" src="/assets/images/gallery-studio-architecture.webp" alt="Serene cream consultation space with a curved arch, linen curtains and sculptural branch" width="1536" height="1024"><span class="gallery-overlay"><small>The environment</small><strong>Space to feel at ease</strong><i aria-hidden="true">01</i></span></div></figure><figure class="gallery-photo gallery-fallback"><div class="gallery-open"><img data-gallery-design="ritual" src="/assets/images/gallery-ritual-still-life.webp" alt="Ceramic bowl, folded ivory linen, olive branch and amber bottle on warm travertine" width="1024" height="1280" loading="lazy"><span class="gallery-overlay"><small>Thoughtful details</small><strong>Care in every ritual</strong><i aria-hidden="true">02</i></span></div></figure><figure class="gallery-photo gallery-fallback"><div class="gallery-open"><img data-gallery-design="water" src="/assets/images/gallery-water-glass.webp" alt="Olive glass and luminous water reflections across pale travertine" width="1024" height="1280" loading="lazy"><span class="gallery-overlay"><small>Restorative care</small><strong>A quieter kind of luxury</strong><i aria-hidden="true">03</i></span></div></figure></div></section><section class="section gallery-results"><div class="gallery-results-head"><div><p class="eyebrow">Client-approved outcomes</p><h2>Real care.<br><em>Real results.</em></h2></div><p>Every result is personal. Images are presented for educational purposes and only with written client consent.</p></div><div class="before-after-grid" id="before-after-grid"><div class="gallery-empty gallery-empty-light"><span>01 / 02</span><h3>Results, shown responsibly.</h3><p>Approved before-and-after images will appear here once published.</p></div></div></section><dialog class="gallery-lightbox" id="gallery-lightbox" aria-label="Gallery image preview"><button type="button" data-lightbox-close aria-label="Close image preview">×</button><div data-lightbox-content></div></dialog>`;
   if (view === "testimonials")
-    root.innerHTML = `<header class="stories-hero"><p class="eyebrow">Client stories</p><h1>Care that stays<br><em>with you.</em></h1><p>Honest words from people who chose thoughtful guidance, personalized care and a calmer kind of experience.</p><div class="stories-seal" aria-hidden="true"><strong>5</strong><span>Thoughtful<br>standards</span></div></header><section class="section stories-section"><div class="stories-intro"><div><p class="eyebrow">In their words</p><h2>The experience,<br><em>remembered.</em></h2></div><p>Each story is shared with approval. Individual experiences vary, and every care plan begins with a personal consultation.</p></div><div class="quotes stories-grid" id="testimonial-grid"><blockquote><div class="stars">★★★★★</div><p>“The care felt unrushed, warm and completely tailored to me.”</p><cite>— ENIVÈ Client</cite></blockquote><blockquote><div class="stars">★★★★★</div><p>“Aisha’s expertise and honesty truly set the experience apart.”</p><cite>— ENIVÈ Client</cite></blockquote></div></section><section class="stories-close"><p class="eyebrow">Your story begins with clarity</p><h2>Feel heard before<br><em>you decide.</em></h2><a class="btn light" href="${BOOKING_URL}" target="_blank" rel="noopener">Book a consultation</a></section>`;
+    root.innerHTML = `<header class="stories-hero"><p class="eyebrow">Client stories</p><h1>Care that stays<br><em>with you.</em></h1><p>Honest words from people who chose thoughtful guidance, personalized care and a calmer kind of experience.</p><div class="stories-seal" aria-label="Published client stories"><strong data-testimonial-count>02</strong><span>Published<br>stories</span></div></header><section class="section stories-section"><div class="stories-intro"><div><p class="eyebrow">In their words</p><h2>The experience,<br><em>remembered.</em></h2></div><p>Each story is shared with approval. Individual experiences vary, and every care plan begins with a personal consultation.</p></div><div class="quotes stories-grid" id="testimonial-grid" aria-live="polite"><blockquote><div class="story-number">01</div><div class="stars">★★★★★</div><p>“The care felt unrushed, warm and completely tailored to me.”</p><cite>— ENIVÈ Client</cite></blockquote><blockquote><div class="story-number">02</div><div class="stars">★★★★★</div><p>“The provider’s expertise and honesty truly set the experience apart.”</p><cite>— ENIVÈ Client</cite></blockquote></div></section><section class="stories-close"><p class="eyebrow">Your story begins with clarity</p><h2>Feel heard before<br><em>you decide.</em></h2><a class="btn light" href="${BOOKING_URL}" target="_blank" rel="noopener">Book a consultation</a></section>`;
+  if (view === "blog")
+    root.innerHTML = `<header class="page-hero journal-hero"><p class="eyebrow">The ENIVÈ journal</p><h1>Read with<br><em>intention.</em></h1><p>Provider-led perspective on aesthetics, skin health and whole-person wellness—written to help you make informed choices.</p></header><section class="section journal-section"><div class="journal-intro"><div><p class="eyebrow">Ideas & guidance</p><h2>A thoughtful place<br><em>to learn.</em></h2></div><p>Explore clear, considered education before your consultation or return whenever a new question comes up.</p></div><nav class="journal-filter" id="blog-filter" aria-label="Filter journal articles" hidden></nav><div class="blog-grid journal-grid" id="blog-grid" aria-live="polite"><article class="journal-empty"><span aria-hidden="true">É</span><h3>The journal is being thoughtfully prepared.</h3><p>New provider-led articles will appear here as they are published.</p></article></div></section><section class="journal-close"><p class="eyebrow">Prefer a conversation?</p><h2>Bring us your<br><em>questions.</em></h2><a class="btn light" href="${BOOKING_URL}" target="_blank" rel="noopener">Book a consultation</a></section>`;
 }
 const pages = {
   about: {
@@ -878,7 +880,38 @@ function blogCard(p, i) {
   const img = p.featured_image_path
     ? storageUrl("blog-images", p.featured_image_path)
     : "";
-  return `<article class="blog-card reveal"><a href="/pages/blog-post.html?slug=${encodeURIComponent(p.slug)}">${img ? `<img src="${img}" alt="" width="400" height="260" loading="lazy">` : ""}<p class="eyebrow">${escapeHtml(p.blog_categories?.name || "Journal")}${p.published_at ? ` · ${formatDate(p.published_at)}` : ""}</p><h2>${escapeHtml(p.title)}</h2><p>${escapeHtml(p.excerpt || "")}</p><span class="text-link">Read the article ↗</span></a></article>`;
+  const category = p.blog_categories?.name || "Journal";
+  return `<article class="blog-card journal-card${i === 0 ? " journal-featured" : ""} reveal" data-blog-category="${escapeHtml(category)}"><a href="/pages/blog-post.html?slug=${encodeURIComponent(p.slug)}">${img ? `<img src="${img}" alt="" width="720" height="480" loading="lazy">` : `<span class="journal-card-placeholder" aria-hidden="true">É</span>`}<div class="journal-card-copy"><p class="eyebrow">${escapeHtml(category)}${p.published_at ? ` · ${formatDate(p.published_at)}` : ""}</p><h2>${escapeHtml(p.title)}</h2><p>${escapeHtml(p.excerpt || "Read this provider-led perspective from the ENIVÈ journal.")}</p><span class="text-link">Read the article <i aria-hidden="true">↗</i></span></div></a></article>`;
+}
+function initBlogFilters(posts) {
+  const filter = document.querySelector("#blog-filter"),
+    grid = document.querySelector("#blog-grid");
+  if (!filter || !grid) return;
+  const categories = [
+    ...new Set(
+      posts.map((post) => post.blog_categories?.name || "Journal"),
+    ),
+  ];
+  if (categories.length < 2) {
+    filter.hidden = true;
+    return;
+  }
+  filter.hidden = false;
+  filter.innerHTML = `<button type="button" data-blog-filter="all" aria-pressed="true">All articles <span>${posts.length}</span></button>${categories.map((category) => `<button type="button" data-blog-filter="${escapeHtml(category)}" aria-pressed="false">${escapeHtml(category)} <span>${posts.filter((post) => (post.blog_categories?.name || "Journal") === category).length}</span></button>`).join("")}`;
+  filter.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-blog-filter]");
+    if (!button) return;
+    filter
+      .querySelectorAll("button")
+      .forEach((item) =>
+        item.setAttribute("aria-pressed", String(item === button)),
+      );
+    grid.querySelectorAll("[data-blog-category]").forEach((card) => {
+      card.hidden =
+        button.dataset.blogFilter !== "all" &&
+        card.dataset.blogCategory !== button.dataset.blogFilter;
+    });
+  });
 }
 async function renderBlogPost() {
   const root = document.querySelector(".blog-post");
@@ -1189,6 +1222,9 @@ async function hydratePublishedContent() {
             `<blockquote class="${t.is_featured ? "featured-story" : ""}"><div class="story-number">${String(i + 1).padStart(2, "0")}</div><div class="stars" aria-label="${t.rating || 5} out of 5 stars">${"★".repeat(t.rating || 5)}</div><p>“${escapeHtml(t.quote)}”</p><cite>— ${escapeHtml(t.client_name || "ENIVÈ Client")}</cite></blockquote>`,
         )
         .join("");
+    const count = document.querySelector("[data-testimonial-count]");
+    if (count)
+      count.textContent = String(publishedTestimonials.length).padStart(2, "0");
   }
   if (provider) {
     const photo = provider.image_path
@@ -1264,7 +1300,11 @@ async function hydratePublishedContent() {
   }
   if (blogPosts?.length) {
     const grid = document.querySelector("#blog-grid");
-    if (grid) grid.innerHTML = blogPosts.slice(0, 9).map(blogCard).join("");
+    const visiblePosts = blogPosts.slice(0, 12);
+    if (grid) {
+      grid.innerHTML = visiblePosts.map(blogCard).join("");
+      initBlogFilters(visiblePosts);
+    }
   }
 }
 function initGalleryExperience(grid, items) {
