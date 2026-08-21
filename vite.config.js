@@ -58,23 +58,43 @@ function blogCleanUrls() {
   };
 }
 
-// Social crawlers do not execute Vite's transformed HTML and need a stable,
-// unhashed image URL. All page metadata points to this exact path.
-function socialPreviewAsset() {
+// JavaScript-rendered sections and social crawlers need stable, unhashed image
+// URLs. Vite cannot discover asset paths that only appear inside template strings.
+function runtimeAssets() {
+  const stableAssets = [
+    "assets/images/enive-hero.jpg",
+    "assets/images/enive-hero.webp",
+    "assets/images/concierge-editorial.webp",
+    "assets/images/ritual-editorial.webp",
+    "assets/images/gallery-ritual-still-life.webp",
+    "assets/images/gallery-studio-architecture.webp",
+    "assets/images/gallery-water-glass.webp",
+    "assets/images/brand/enive-logo.jpeg",
+    "assets/images/services/consultations-hero.webp",
+    "assets/images/services/injectables-hero.webp",
+    "assets/images/services/iv-hydration-hero.webp",
+    "assets/images/services/laser-hair-removal-hero.webp",
+    "assets/images/services/medical-weight-loss-hero.webp",
+    "assets/images/services/peptide-therapy-hero.webp",
+    "assets/images/services/wellness-hero.webp",
+  ];
+
   return {
-    name: "social-preview-asset",
+    name: "runtime-assets",
     generateBundle() {
-      this.emitFile({
-        type: "asset",
-        fileName: "assets/images/enive-hero.jpg",
-        source: readFileSync(resolve(root, "assets/images/enive-hero.jpg")),
+      stableAssets.forEach((fileName) => {
+        this.emitFile({
+          type: "asset",
+          fileName,
+          source: readFileSync(resolve(root, fileName)),
+        });
       });
     },
   };
 }
 
 export default defineConfig({
-  plugins: [blogCleanUrls(), socialPreviewAsset()],
+  plugins: [blogCleanUrls(), runtimeAssets()],
   build: {
     rollupOptions: {
       input: {

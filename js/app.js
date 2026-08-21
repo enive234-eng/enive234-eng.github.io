@@ -40,7 +40,7 @@ if (header)
     )
     .join(
       "",
-    )}</div><a class="brand" href="/" aria-label="ENIVÈ home"><img src="/assets/images/brand/enive-logo.jpeg" alt="ENIVÈ Wellness & Aesthetics" width="64" height="64"></a><div class="nav-right"><div class="nav-links">${nav
+    )}</div><a class="brand" href="/" aria-label="ENIVÈ home"><img src="/assets/images/brand/enive-logo.jpeg" alt="ENIVÈ Wellness & Aesthetics" width="64" height="64" onerror="this.hidden=true;this.nextElementSibling.hidden=false"><span class="brand-fallback" hidden>ENIVÈ<small>WELLNESS · AESTHETICS</small></span></a><div class="nav-right"><div class="nav-links">${nav
     .slice(3)
     .map(([n, u]) => `<a href="${u}">${n}</a>`)
     .join(
@@ -60,7 +60,7 @@ footer
   ?.querySelector(".footer-about")
   ?.insertAdjacentHTML(
     "afterbegin",
-    '<span class="brand-stamp brand-stamp-footer" aria-hidden="true"><img src="/assets/images/brand/enive-logo.jpeg" alt="" width="84" height="84" loading="lazy"></span>',
+    '<span class="brand-stamp brand-stamp-footer" aria-hidden="true"><img src="/assets/images/brand/enive-logo.jpeg" alt="" width="84" height="84" loading="lazy" onerror="this.remove();this.parentElement.classList.add(\'brand-stamp-fallback\')"></span>',
   );
 document.querySelectorAll("[data-book]").forEach((a) => {
   a.href = BOOKING_URL;
@@ -388,15 +388,15 @@ async function renderServiceExperience() {
   );
   const fallbackImages = {
     "laser-hair-removal":
-      "/assets/images/services/laser-hair-removal-hero.jpeg",
-    injectables: "/assets/images/services/injectables-hero.jpeg",
-    "medical-aesthetics": "/assets/images/services/injectables-hero.jpeg",
-    "iv-hydration": "/assets/images/services/iv-hydration-hero.jpeg",
+      "/assets/images/services/laser-hair-removal-hero.webp",
+    injectables: "/assets/images/services/injectables-hero.webp",
+    "medical-aesthetics": "/assets/images/services/injectables-hero.webp",
+    "iv-hydration": "/assets/images/services/iv-hydration-hero.webp",
     "medical-weight-loss":
-      "/assets/images/services/medical-weight-loss-hero.jpeg",
-    "peptide-therapy": "/assets/images/services/peptide-therapy-hero.jpeg",
-    "concierge-wellness": "/assets/images/services/wellness-hero.jpeg",
-    consultations: "/assets/images/services/consultations-hero.jpeg",
+      "/assets/images/services/medical-weight-loss-hero.webp",
+    "peptide-therapy": "/assets/images/services/peptide-therapy-hero.webp",
+    "concierge-wellness": "/assets/images/services/wellness-hero.webp",
+    consultations: "/assets/images/services/consultations-hero.webp",
   };
   const heroImage =
     serviceImage(service) ||
@@ -495,7 +495,7 @@ async function renderServiceExperience() {
         <p>${escapeHtml(service.intro || service.short)}</p>
       </div>
       <figure class="service-experience-image">
-        <img src="${heroImage}" alt="${escapeHtml(service.name)} at ENIVÈ" width="900" height="1100">
+        <img src="${heroImage}" alt="${escapeHtml(service.name)} at ENIVÈ" width="900" height="1100" fetchpriority="high" decoding="async" onerror="this.onerror=null;this.src='/assets/images/enive-hero.webp'">
         <figcaption>ENIVÈ · Wellness &amp; Aesthetics</figcaption>
       </figure>
       <section class="service-summary-panel" aria-label="${escapeHtml(service.name)} summary">
@@ -717,7 +717,7 @@ function aboutExperience(content = {}) {
         <a class="text-link" href="#about-story">Discover our approach <span aria-hidden="true">↓</span></a>
       </div>
       <figure class="about-hero-image">
-        <img src="/assets/images/services/consultations-hero.jpeg" alt="A calm, welcoming wellness consultation at ENIVÈ" width="1402" height="1122" fetchpriority="high">
+        <img src="/assets/images/services/consultations-hero.webp" alt="A calm, welcoming wellness consultation at ENIVÈ" width="1200" height="960" fetchpriority="high" decoding="async">
         <figcaption><span>ENIVÈ</span><small>Wellness · Aesthetics</small></figcaption>
       </figure>
       <div class="about-hero-note" aria-label="Practice qualities">

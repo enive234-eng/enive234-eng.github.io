@@ -3019,6 +3019,195 @@ summary::-webkit-details-marker {
     font-size: 23vw;
   }
 }
+
+/* Reliable brand fallback and compact mobile composition. */
+.brand-fallback {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-content: center;
+  gap: 0.08rem;
+  color: #fffaf4;
+  font: 500 1rem/1 var(--serif);
+  letter-spacing: 0.08em;
+  text-align: center;
+}
+.brand-fallback[hidden] {
+  display: none;
+}
+.brand-fallback small {
+  font: 500 0.23rem/1.2 var(--sans);
+  letter-spacing: 0.1em;
+}
+.brand-stamp-fallback:after {
+  content: "ENIVÈ";
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-content: center;
+  color: #fffaf4;
+  font: 500 0.86rem var(--serif);
+  letter-spacing: 0.08em;
+}
+
+@media (max-width: 700px) {
+  html,
+  body:not(.admin-body),
+  body:not(.admin-body) main {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: clip;
+  }
+
+  .mobile-quick-book {
+    left: 0.75rem;
+    right: 0.75rem;
+    width: auto;
+    max-width: none;
+    box-sizing: border-box;
+    transform: translateY(calc(100% + 1.5rem));
+  }
+  .quick-book-visible .mobile-quick-book {
+    transform: translateY(0);
+  }
+
+  .editorial-feature {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+    padding: 0;
+  }
+  .editorial-feature .editorial-image {
+    width: 100%;
+    max-width: none;
+    padding: 0;
+  }
+  .editorial-feature .editorial-image img {
+    width: 100%;
+    height: auto;
+    max-height: none;
+    aspect-ratio: 5 / 4;
+    object-fit: cover;
+    object-position: center 58%;
+    border-radius: 0;
+  }
+  .editorial-feature .vertical-caption {
+    left: 0.8rem;
+    bottom: 0.9rem;
+    color: rgba(255, 255, 255, 0.72);
+  }
+  .editorial-feature .editorial-copy {
+    padding: 3.6rem var(--pad) 4rem;
+  }
+  .editorial-feature .editorial-copy h2 {
+    margin: 0.55rem 0 1.25rem;
+    font-size: clamp(2.75rem, 12.5vw, 3.55rem);
+    line-height: 0.9;
+  }
+  .editorial-feature .value-list {
+    margin-top: 2rem;
+  }
+  .editorial-feature .value-list > div {
+    grid-template-columns: 1.7rem minmax(0, 1fr);
+    gap: 0.25rem 0.75rem;
+    padding: 1.15rem 0;
+  }
+  .editorial-feature .value-list h3 {
+    font-size: 1.5rem;
+    line-height: 1.05;
+  }
+  .editorial-feature .value-list p {
+    grid-column: 2;
+    font-size: 0.8rem;
+    line-height: 1.6;
+  }
+
+  .concierge-premium {
+    display: grid;
+    min-height: 0;
+    overflow: hidden;
+  }
+  .concierge-premium > img {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 5 / 4;
+    object-fit: cover;
+    object-position: 45% center;
+    filter: saturate(0.82) brightness(0.88);
+  }
+  .concierge-premium .concierge-panel {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    min-height: 0;
+    padding: 3.6rem var(--pad) 4rem;
+    background: #302723;
+    backdrop-filter: none;
+  }
+  .concierge-premium .concierge-panel h2 {
+    margin: 0.65rem 0 1.25rem;
+    font-size: clamp(2.9rem, 13vw, 3.7rem);
+    line-height: 0.9;
+  }
+  .concierge-premium .concierge-panel p:not(.eyebrow) {
+    font-size: 0.88rem;
+    line-height: 1.7;
+  }
+  .concierge-premium .concierge-panel .btn {
+    width: 100%;
+    margin-top: 1.25rem;
+  }
+
+  .service-experience-hero {
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+  }
+  .service-experience-copy {
+    min-width: 0;
+    padding: 5.5rem var(--pad) 3rem;
+  }
+  .service-experience-copy h1 {
+    max-width: 100%;
+    font-size: clamp(3.35rem, 15vw, 4.45rem);
+    line-height: 0.84;
+    overflow-wrap: anywhere;
+  }
+  .service-experience-copy h2 {
+    margin: 1.2rem 0 1.4rem;
+    font-size: clamp(2.15rem, 10vw, 2.7rem);
+  }
+  .service-experience-copy > p:last-child {
+    font-size: 0.88rem;
+    line-height: 1.7;
+  }
+  .service-experience-image {
+    min-height: 0;
+    aspect-ratio: 5 / 4;
+  }
+  .service-experience-image img {
+    position: absolute;
+    inset: 0;
+  }
+  .service-summary-panel {
+    width: calc(100% - 1.5rem);
+    margin: -1.5rem auto 0;
+  }
+  .service-summary-booking {
+    min-height: 190px;
+  }
+  .service-how {
+    padding: 5.25rem var(--pad) 4.75rem;
+  }
+  .service-how h2 {
+    font-size: clamp(3.2rem, 14vw, 4.2rem);
+  }
+  .service-how > p:not(.eyebrow) {
+    font-size: 1.08rem;
+    line-height: 1.55;
+  }
+}
 @media (prefers-reduced-motion: reduce) {
   html[data-parallax-init] .hero-premium .hero-copy.visible > * {
     animation: none;

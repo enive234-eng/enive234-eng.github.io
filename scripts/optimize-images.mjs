@@ -1,4 +1,6 @@
 import sharp from "sharp";
+import { statSync } from "node:fs";
+import { basename, dirname, extname, join } from "node:path";
 
 const src = "assets/images/source/enive-hero-v2.png";
 const meta = await sharp(src).metadata();
@@ -25,6 +27,38 @@ for (const f of [
     m.width,
     "x",
     m.height,
-    (m.size / 1024).toFixed(0) + "KB",
+    (statSync(f).size / 1024).toFixed(0) + "KB",
+  );
+}
+
+const serviceImages = [
+  "assets/images/services/consultations-hero.jpeg",
+  "assets/images/services/injectables-hero.jpeg",
+  "assets/images/services/iv-hydration-hero.jpeg",
+  "assets/images/services/laser-hair-removal-hero.jpeg",
+  "assets/images/services/medical-weight-loss-hero.jpeg",
+  "assets/images/services/peptide-therapy-hero.jpeg",
+  "assets/images/services/wellness-hero.jpeg",
+];
+
+for (const input of serviceImages) {
+  const output = join(
+    dirname(input),
+    `${basename(input, extname(input))}.webp`,
+  );
+  await sharp(input)
+    .rotate()
+    .resize({ width: 1200, height: 1500, fit: "inside", withoutEnlargement: true })
+    .webp({ quality: 78, effort: 5 })
+    .toFile(output);
+  const outputMeta = await sharp(output).metadata();
+  console.log(
+    output,
+    "->",
+    outputMeta.width,
+    "x",
+    outputMeta.height,
+    (statSync(output).size / 1024).toFixed(0) + "KB",
+    `(from ${(statSync(input).size / 1024).toFixed(0)}KB)`,
   );
 }
