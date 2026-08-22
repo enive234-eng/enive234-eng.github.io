@@ -5929,6 +5929,9 @@ body:not(.admin-body) .text-link {
   .concierge-premium > img {
     aspect-ratio: 4 / 3;
   }
+  .concierge-premium > img {
+    object-position: center 42%;
+  }
   .editorial-feature .editorial-copy,
   .concierge-premium .concierge-panel {
     padding: 3.5rem var(--pad) 3.8rem;
