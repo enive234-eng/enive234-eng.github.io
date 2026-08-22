@@ -901,9 +901,82 @@ function providerExperience(profile = {}, photoPath = "") {
     </section>`;
 }
 
+const galleryFallbackItems = [
+  {
+    title: "Confidence looks like you",
+    category: "Beauty",
+    image_path: "/assets/images/home-hero.webp",
+    alt_text: "Three women celebrating natural beauty in neutral tones",
+    is_featured: true,
+    is_local: true,
+  },
+  {
+    title: "The art of subtle refinement",
+    category: "Aesthetics",
+    image_path: "/assets/images/services/injectables-hero.webp",
+    alt_text: "Woman with luminous skin in a refined beauty portrait",
+    is_local: true,
+  },
+  {
+    title: "Progress, personally supported",
+    category: "Wellness",
+    image_path: "/assets/images/services/medical-weight-loss-hero.webp",
+    alt_text: "Provider-led wellness support in a refined professional setting",
+    is_local: true,
+  },
+  {
+    title: "Precision meets ease",
+    category: "Skin & Laser",
+    image_path: "/assets/images/services/laser-hair-removal-hero.webp",
+    alt_text: "Modern skin and laser care portrait",
+    is_local: true,
+  },
+  {
+    title: "A space designed to exhale",
+    category: "The Studio",
+    image_path: "/assets/images/gallery-studio-architecture.webp",
+    alt_text: "Serene cream consultation space with sculptural details",
+    design_slot: "studio",
+    is_local: true,
+  },
+  {
+    title: "Wellness, thoughtfully restored",
+    category: "Wellness",
+    image_path: "/assets/images/services/iv-hydration-hero.webp",
+    alt_text: "Calm wellness and hydration experience",
+    is_local: true,
+  },
+  {
+    title: "Every detail has intention",
+    category: "The Ritual",
+    image_path: "/assets/images/gallery-ritual-still-life.webp",
+    alt_text: "Warm travertine, folded linen and a considered wellness ritual",
+    design_slot: "ritual",
+    is_local: true,
+  },
+  {
+    title: "A quieter kind of luxury",
+    category: "The Ritual",
+    image_path: "/assets/images/gallery-water-glass.webp",
+    alt_text: "Luminous water reflections across pale travertine",
+    design_slot: "water",
+    is_local: true,
+  },
+];
+const galleryItemSrc = (item) =>
+  item.is_local
+    ? item.image_path
+    : storageUrl("gallery-images", item.image_path);
+const galleryFigure = (item, index) =>
+  `<figure class="gallery-photo${item.is_featured || index === 0 ? " gallery-featured" : ""}${item.is_local ? " gallery-fallback" : ""}" data-gallery-category="${escapeHtml(item.category || "Gallery")}" data-gallery-index="${index}"><button type="button" class="gallery-open" aria-label="Open ${escapeHtml(item.title || item.category || "gallery image")}"><img${item.design_slot ? ` data-gallery-design="${item.design_slot}"` : ""} src="${galleryItemSrc(item)}" alt="${escapeHtml(item.alt_text)}" width="900" height="1100"${index ? ' loading="lazy"' : ' fetchpriority="high"'}><span class="gallery-overlay"><small>${escapeHtml(item.category || "The ENIVÈ experience")}</small><strong>${escapeHtml(item.title || "A considered detail")}</strong><i aria-hidden="true">${String(index + 1).padStart(2, "0")}</i></span></button></figure>`;
+
 function enhanceEditorialPage(root, view) {
-  if (view === "gallery")
-    root.innerHTML = `<header class="gallery-hero"><div><p class="eyebrow">The ENIVÈ gallery</p><h1>Details worth<br><em>remembering.</em></h1><p>A visual journal of our space, our approach and client-approved results—curated with the same care as every visit.</p></div><div class="gallery-hero-mark" aria-hidden="true"><span>Visual journal</span><strong>É</strong><small>Sugar Land · Texas</small></div></header><section class="section gallery-journal"><div class="gallery-intro"><div><p class="eyebrow">Inside ENIVÈ</p><h2>A considered<br><em>point of view.</em></h2></div><p>Explore the quiet details, thoughtful treatments and personal moments that shape the ENIVÈ experience.</p></div><div class="gallery-filter" id="gallery-filter" aria-label="Filter gallery"></div><div class="gallery-grid gallery-bento" id="gallery-grid"><figure class="gallery-photo gallery-featured gallery-fallback"><div class="gallery-open"><img data-gallery-design="studio" src="/assets/images/gallery-studio-architecture.webp" alt="Serene cream consultation space with a curved arch, linen curtains and sculptural branch" width="1536" height="1024"><span class="gallery-overlay"><small>The environment</small><strong>Space to feel at ease</strong><i aria-hidden="true">01</i></span></div></figure><figure class="gallery-photo gallery-fallback"><div class="gallery-open"><img data-gallery-design="ritual" src="/assets/images/gallery-ritual-still-life.webp" alt="Ceramic bowl, folded ivory linen, olive branch and amber bottle on warm travertine" width="1024" height="1280" loading="lazy"><span class="gallery-overlay"><small>Thoughtful details</small><strong>Care in every ritual</strong><i aria-hidden="true">02</i></span></div></figure><figure class="gallery-photo gallery-fallback"><div class="gallery-open"><img data-gallery-design="water" src="/assets/images/gallery-water-glass.webp" alt="Olive glass and luminous water reflections across pale travertine" width="1024" height="1280" loading="lazy"><span class="gallery-overlay"><small>Restorative care</small><strong>A quieter kind of luxury</strong><i aria-hidden="true">03</i></span></div></figure></div></section><section class="section gallery-results"><div class="gallery-results-head"><div><p class="eyebrow">Client-approved outcomes</p><h2>Real care.<br><em>Real results.</em></h2></div><p>Every result is personal. Images are presented for educational purposes and only with written client consent.</p></div><div class="before-after-grid" id="before-after-grid"><div class="gallery-empty gallery-empty-light"><span>01 / 02</span><h3>Results, shown responsibly.</h3><p>Approved before-and-after images will appear here once published.</p></div></div></section><dialog class="gallery-lightbox" id="gallery-lightbox" aria-label="Gallery image preview"><button type="button" data-lightbox-close aria-label="Close image preview">×</button><div data-lightbox-content></div></dialog>`;
+  if (view === "gallery") {
+    root.innerHTML = `<header class="gallery-hero gallery-hero-luxe"><div class="gallery-hero-copy"><p class="eyebrow">The ENIVÈ visual journal · 01</p><h1>A visual language<br><em>of considered care.</em></h1><p>Beauty, wellness and the quiet details between them—seen through the warm, refined point of view that shapes every ENIVÈ experience.</p><div class="gallery-hero-meta"><span>Modern aesthetics</span><span>Personal wellness</span><span>Sugar Land, Texas</span></div></div><div class="gallery-hero-collage"><figure class="gallery-hero-primary"><img src="/assets/images/home-concierge.webp" alt="Four women representing inclusive beauty" width="1299" height="1211"><figcaption>Beauty belongs to everyone.</figcaption></figure><figure class="gallery-hero-secondary"><img src="/assets/images/gallery-ritual-still-life.webp" alt="Considered wellness ritual in warm neutral tones" width="1024" height="1280"></figure><span class="gallery-hero-monogram" aria-hidden="true">É<small>Visual<br>journal</small></span></div></header><div class="gallery-signature-strip" aria-label="Gallery themes"><span>Beauty without a blueprint</span><i></i><span>Care with intention</span><i></i><span>Wellness, personally considered</span></div><section class="section gallery-journal gallery-journal-luxe"><div class="gallery-intro"><div><p class="eyebrow">Inside ENIVÈ · 02</p><h2>Moments that define<br><em>the experience.</em></h2></div><p>A living collection of natural beauty, clinical artistry, thoughtful environments and the rituals that make care feel personal.</p></div><div class="gallery-filter" id="gallery-filter" aria-label="Filter gallery"></div><div class="gallery-grid gallery-bento gallery-bento-luxe" id="gallery-grid">${galleryFallbackItems.map(galleryFigure).join("")}</div></section><section class="section gallery-results gallery-results-luxe"><div class="gallery-results-head"><div><p class="eyebrow">Client-approved outcomes · 03</p><h2>Real care.<br><em>Real results.</em></h2></div><p>Every result is personal. Images are shared for education and inspiration only when written client consent has been provided.</p></div><div class="before-after-grid" id="before-after-grid"><div class="gallery-empty gallery-empty-light"><span>THE RESULTS ARCHIVE</span><h3>Shown responsibly.<br>Shared intentionally.</h3><p>Approved before-and-after imagery will appear here as the collection grows.</p></div></div></section><section class="gallery-closing"><span class="brand-stamp" aria-hidden="true"><img src="/assets/images/brand/enive-logo.jpeg" alt="" width="90" height="90" loading="lazy"></span><p class="eyebrow">Begin your own experience</p><h2>See what thoughtful care<br><em>can feel like.</em></h2><a class="btn" href="${BOOKING_URL}" target="_blank" rel="noopener">Begin your consultation</a></section><dialog class="gallery-lightbox" id="gallery-lightbox" aria-label="Gallery image preview"><button type="button" data-lightbox-close aria-label="Close image preview">×</button><div data-lightbox-content></div></dialog>`;
+    const fallbackGrid = root.querySelector("#gallery-grid");
+    if (fallbackGrid)
+      initGalleryExperience(fallbackGrid, galleryFallbackItems);
+  }
   if (view === "testimonials")
     root.innerHTML = `<header class="stories-hero"><p class="eyebrow">Client stories</p><h1>Care that stays<br><em>with you.</em></h1><p>Honest words from people who chose thoughtful guidance, personalized care and a calmer kind of experience.</p><div class="stories-seal" aria-label="Published client stories"><strong data-testimonial-count>02</strong><span>Published<br>stories</span></div></header><section class="section stories-section"><div class="stories-intro"><div><p class="eyebrow">In their words</p><h2>The experience,<br><em>remembered.</em></h2></div><p>Each story is shared with approval. Individual experiences vary, and every care plan begins with a personal consultation.</p></div><div class="quotes stories-grid" id="testimonial-grid" aria-live="polite"><blockquote><div class="story-number">01</div><div class="stars">★★★★★</div><p>“The care felt unrushed, warm and completely tailored to me.”</p><cite>— ENIVÈ Client</cite></blockquote><blockquote><div class="story-number">02</div><div class="stars">★★★★★</div><p>“The provider’s expertise and honesty truly set the experience apart.”</p><cite>— ENIVÈ Client</cite></blockquote></div></section><section class="stories-close"><p class="eyebrow">Your story begins with clarity</p><h2>Feel heard before<br><em>you decide.</em></h2><a class="btn light" href="${BOOKING_URL}" target="_blank" rel="noopener">Book a consultation</a></section>`;
   if (view === "blog")
@@ -1272,7 +1345,14 @@ async function hydratePublishedContent() {
   const galleryDesign = publicSettings?.gallery_design || {};
   Object.entries(galleryDesign).forEach(([slot, path]) => {
     const image = document.querySelector(`[data-gallery-design="${slot}"]`);
-    if (image && path) image.src = storageUrl("gallery-images", path);
+    if (image && path) {
+      const customImage = storageUrl("gallery-images", path);
+      image.src = customImage;
+      const fallbackItem = galleryFallbackItems.find(
+        (item) => item.design_slot === slot,
+      );
+      if (fallbackItem) fallbackItem.image_path = customImage;
+    }
   });
   if (catalog?.length) {
     const normalized = catalog.map(normalizeCategory);
@@ -1365,12 +1445,7 @@ async function hydratePublishedContent() {
       const ordered = [...galleryItems].sort(
         (a, b) => Number(b.is_featured) - Number(a.is_featured),
       );
-      grid.innerHTML = ordered
-        .map(
-          (g, i) =>
-            `<figure class="gallery-photo${g.is_featured || i === 0 ? " gallery-featured" : ""}" data-gallery-category="${escapeHtml(g.category || "Gallery")}" data-gallery-index="${i}"><button type="button" class="gallery-open" aria-label="Open ${escapeHtml(g.title || g.category || "gallery image")}"><img src="${storageUrl("gallery-images", g.image_path)}" alt="${escapeHtml(g.alt_text)}" width="720" height="900" loading="lazy"><span class="gallery-overlay"><small>${escapeHtml(g.category || "The ENIVÈ experience")}</small><strong>${escapeHtml(g.title || "A considered detail")}</strong><i aria-hidden="true">↗</i></span></button></figure>`,
-        )
-        .join("");
+      grid.innerHTML = ordered.map(galleryFigure).join("");
       initGalleryExperience(grid, ordered);
     }
   }
@@ -1394,45 +1469,63 @@ async function hydratePublishedContent() {
   }
 }
 function initGalleryExperience(grid, items) {
+  grid._galleryController?.abort();
+  const controller = new AbortController(),
+    { signal } = controller;
+  grid._galleryController = controller;
   const filter = document.querySelector("#gallery-filter"),
     categories = [
       ...new Set(items.map((item) => item.category).filter(Boolean)),
     ];
   if (filter) {
     filter.innerHTML = `<button type="button" data-gallery-filter="all" aria-pressed="true">All moments <span>${items.length}</span></button>${categories.map((category) => `<button type="button" data-gallery-filter="${escapeHtml(category)}" aria-pressed="false">${escapeHtml(category)} <span>${items.filter((item) => item.category === category).length}</span></button>`).join("")}`;
-    filter.addEventListener("click", (event) => {
-      const button = event.target.closest("[data-gallery-filter]");
-      if (!button) return;
-      filter
-        .querySelectorAll("button")
-        .forEach((item) =>
-          item.setAttribute("aria-pressed", String(item === button)),
-        );
-      grid
-        .querySelectorAll("[data-gallery-category]")
-        .forEach(
-          (item) =>
-            (item.hidden =
-              button.dataset.galleryFilter !== "all" &&
-              item.dataset.galleryCategory !== button.dataset.galleryFilter),
-        );
-    });
+    filter.addEventListener(
+      "click",
+      (event) => {
+        const button = event.target.closest("[data-gallery-filter]");
+        if (!button) return;
+        filter
+          .querySelectorAll("button")
+          .forEach((item) =>
+            item.setAttribute("aria-pressed", String(item === button)),
+          );
+        grid
+          .querySelectorAll("[data-gallery-category]")
+          .forEach(
+            (item) =>
+              (item.hidden =
+                button.dataset.galleryFilter !== "all" &&
+                item.dataset.galleryCategory !==
+                  button.dataset.galleryFilter),
+          );
+      },
+      { signal },
+    );
   }
   const dialog = document.querySelector("#gallery-lightbox"),
     content = dialog?.querySelector("[data-lightbox-content]");
-  grid.addEventListener("click", (event) => {
-    const item = event.target.closest("[data-gallery-index]");
-    if (!item || !dialog || !content) return;
-    const data = items[Number(item.dataset.galleryIndex)];
-    content.innerHTML = `<img src="${storageUrl("gallery-images", data.image_path)}" alt="${escapeHtml(data.alt_text)}"><div><p class="eyebrow">${escapeHtml(data.category || "ENIVÈ")}</p><h2>${escapeHtml(data.title || "A considered detail")}</h2></div>`;
-    dialog.showModal();
-  });
+  grid.addEventListener(
+    "click",
+    (event) => {
+      const item = event.target.closest("[data-gallery-index]");
+      if (!item || !dialog || !content) return;
+      const data = items[Number(item.dataset.galleryIndex)];
+      if (!data) return;
+      content.innerHTML = `<img src="${galleryItemSrc(data)}" alt="${escapeHtml(data.alt_text)}"><div><p class="eyebrow">${escapeHtml(data.category || "ENIVÈ")}</p><h2>${escapeHtml(data.title || "A considered detail")}</h2><span>ENIVÈ · Visual journal</span></div>`;
+      dialog.showModal();
+    },
+    { signal },
+  );
   dialog
     ?.querySelector("[data-lightbox-close]")
-    ?.addEventListener("click", () => dialog.close());
-  dialog?.addEventListener("click", (event) => {
-    if (event.target === dialog) dialog.close();
-  });
+    ?.addEventListener("click", () => dialog.close(), { signal });
+  dialog?.addEventListener(
+    "click",
+    (event) => {
+      if (event.target === dialog) dialog.close();
+    },
+    { signal },
+  );
 }
 function escapeHtml(value) {
   const node = document.createElement("div");
