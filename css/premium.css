@@ -6779,3 +6779,259 @@ body:not(.admin-body) .text-link {
     transition: none !important;
   }
 }
+
+/* Mobile navigation art direction: boutique, calm and purposefully compact. */
+@media (max-width: 700px) {
+  body.menu-open .site-header {
+    opacity: 0;
+    pointer-events: none;
+  }
+  body.menu-open .mobile-menu-backdrop {
+    background: rgba(42, 30, 25, 0.52);
+  }
+  .mobile-menu {
+    inset: 0 0.45rem auto;
+    max-height: calc(100dvh - 0.45rem);
+    padding: 0.6rem;
+    border: 1px solid rgba(93, 62, 48, 0.14);
+    border-radius: 0 0 1.4rem 1.4rem;
+    background:
+      radial-gradient(circle at 8% 5%, rgba(209, 123, 85, 0.14), transparent 13rem),
+      #f4eade;
+    box-shadow: 0 28px 80px rgba(44, 30, 24, 0.3);
+  }
+  #site-header.is-scrolled .mobile-menu {
+    inset: 0 0.45rem auto;
+    height: auto;
+    max-height: calc(100dvh - 0.45rem);
+    padding: 0.6rem;
+  }
+  .mobile-menu-top {
+    display: grid;
+    grid-template-columns: 44px minmax(0, 1fr) 42px;
+    align-items: center;
+    gap: 0.7rem;
+    min-height: 50px;
+    padding: 0.1rem 0.15rem 0.55rem;
+  }
+  .mobile-menu-brand {
+    width: 42px;
+    height: 42px;
+    overflow: hidden;
+    border-radius: 50%;
+    box-shadow: 0 7px 18px rgba(96, 55, 38, 0.14);
+  }
+  .mobile-menu-brand img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .mobile-menu-top > div {
+    display: grid;
+    gap: 0.1rem;
+  }
+  .mobile-menu-top > div span {
+    color: #342925;
+    font: 500 1.05rem/1 var(--serif);
+    letter-spacing: 0.16em;
+  }
+  .mobile-menu-top > div small {
+    color: #967568;
+    font: 600 0.43rem/1.3 var(--sans);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .mobile-menu-close {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: 1px solid rgba(70, 48, 39, 0.18);
+    border-radius: 50%;
+    background: rgba(255, 252, 247, 0.68);
+  }
+  .mobile-menu-close span {
+    position: absolute;
+    top: 19px;
+    left: 11px;
+    width: 17px;
+    height: 1px;
+    background: #342925;
+  }
+  .mobile-menu-close span:first-child {
+    transform: rotate(45deg);
+  }
+  .mobile-menu-close span:last-child {
+    transform: rotate(-45deg);
+  }
+  .mobile-menu-intro {
+    position: relative;
+    overflow: hidden;
+    padding: 0.9rem 1rem 1rem;
+    border-radius: 0.9rem;
+    background: #332824;
+    color: #fffaf4;
+  }
+  .mobile-menu-intro:after {
+    content: "E";
+    position: absolute;
+    right: -0.02em;
+    bottom: -0.48em;
+    color: rgba(255, 255, 255, 0.045);
+    font: 400 7rem/1 var(--serif);
+  }
+  .mobile-menu-intro .eyebrow {
+    position: relative;
+    z-index: 1;
+    margin: 0 0 0.3rem;
+    color: #d9aa92;
+    font-size: 0.45rem;
+  }
+  .mobile-menu-intro > p:last-child {
+    position: relative;
+    z-index: 1;
+    margin: 0;
+    font: 500 1.5rem/1 var(--serif);
+  }
+  .mobile-menu-intro em {
+    color: #db987c;
+    font-weight: 400;
+  }
+  .mobile-menu-links {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.45rem;
+    margin-top: 0.55rem;
+  }
+  .mobile-menu-links a {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto 1fr;
+    min-width: 0;
+    min-height: 66px;
+    padding: 0.65rem 0.7rem;
+    border: 1px solid rgba(79, 53, 43, 0.1);
+    border-radius: 0.72rem;
+    background: rgba(255, 252, 247, 0.6);
+    transition:
+      transform 0.2s ease,
+      border-color 0.2s ease,
+      background 0.2s ease;
+  }
+  .mobile-menu-links a:active {
+    transform: scale(0.975);
+    border-color: rgba(173, 101, 79, 0.36);
+    background: #fffaf4;
+  }
+  .mobile-menu-links a small {
+    color: #b17962;
+    font: italic 0.5rem/1 var(--serif);
+  }
+  .mobile-menu-links a strong {
+    align-self: end;
+    overflow: hidden;
+    color: #342925;
+    font: 500 clamp(1.05rem, 5vw, 1.28rem)/1 var(--serif);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .mobile-menu-links a > span {
+    grid-column: 2;
+    grid-row: 1 / 3;
+    align-self: end;
+    color: #b86f55;
+    font: 400 0.7rem/1 var(--sans);
+  }
+  .mobile-menu-links a[aria-current="page"] {
+    border-color: #b86f55;
+    background: #d78360;
+  }
+  .mobile-menu-links a[aria-current="page"] small,
+  .mobile-menu-links a[aria-current="page"] strong,
+  .mobile-menu-links a[aria-current="page"] > span {
+    color: #fffaf4;
+  }
+  .mobile-services-group {
+    margin-top: 0.5rem;
+    border: 0;
+    border-radius: 0.72rem;
+    background: #e8d5c7;
+  }
+  .mobile-services-group summary {
+    min-height: 48px;
+    padding: 0.55rem 0.7rem;
+    font-size: 1.1rem;
+  }
+  .mobile-services-group > div {
+    max-height: min(36dvh, 290px);
+    padding: 0 0.7rem 0.65rem 2.7rem;
+  }
+  .mobile-services-group a {
+    min-height: 36px;
+    border-color: rgba(71, 48, 39, 0.12);
+    font-size: 0.58rem;
+  }
+  .mobile-menu .mobile-book {
+    min-height: 56px;
+    margin-top: 0.5rem;
+    padding: 0.65rem 0.65rem 0.65rem 0.85rem;
+    border-radius: 0.72rem;
+    box-shadow: 0 12px 28px rgba(48, 39, 35, 0.15);
+  }
+  .mobile-menu .mobile-book i {
+    width: 32px;
+    height: 32px;
+  }
+  .mobile-menu-note {
+    margin-top: 0.45rem;
+    padding: 0.5rem 0.45rem 0.05rem;
+    border: 0;
+  }
+}
+@media (max-width: 700px) and (max-height: 620px) {
+  .mobile-menu-top {
+    min-height: 42px;
+    padding-bottom: 0.35rem;
+  }
+  .mobile-menu-brand {
+    width: 36px;
+    height: 36px;
+  }
+  .mobile-menu-close {
+    width: 36px;
+    height: 36px;
+  }
+  .mobile-menu-close span {
+    top: 17px;
+    left: 9px;
+  }
+  .mobile-menu-intro {
+    padding: 0.65rem 0.8rem 0.72rem;
+  }
+  .mobile-menu-intro > p:last-child {
+    font-size: 1.25rem;
+  }
+  .mobile-menu-links {
+    gap: 0.35rem;
+    margin-top: 0.4rem;
+  }
+  .mobile-menu-links a {
+    min-height: 52px;
+    padding: 0.45rem 0.6rem;
+  }
+  .mobile-services-group {
+    margin-top: 0.35rem;
+  }
+  .mobile-services-group summary {
+    min-height: 42px;
+    padding-block: 0.4rem;
+  }
+  .mobile-menu .mobile-book {
+    min-height: 48px;
+    margin-top: 0.35rem;
+    padding-block: 0.45rem;
+  }
+  .mobile-menu-note {
+    display: none;
+  }
+}
