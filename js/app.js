@@ -970,6 +970,27 @@ const galleryItemSrc = (item) =>
 const galleryFigure = (item, index) =>
   `<figure class="gallery-photo${item.is_featured || index === 0 ? " gallery-featured" : ""}${item.is_local ? " gallery-fallback" : ""}" data-gallery-category="${escapeHtml(item.category || "Gallery")}" data-gallery-index="${index}"><button type="button" class="gallery-open" aria-label="Open ${escapeHtml(item.title || item.category || "gallery image")}"><img${item.design_slot ? ` data-gallery-design="${item.design_slot}"` : ""} src="${galleryItemSrc(item)}" alt="${escapeHtml(item.alt_text)}" width="900" height="1100"${index ? ' loading="lazy"' : ' fetchpriority="high"'}><span class="gallery-overlay"><small>${escapeHtml(item.category || "The ENIVÈ experience")}</small><strong>${escapeHtml(item.title || "A considered detail")}</strong><i aria-hidden="true">${String(index + 1).padStart(2, "0")}</i></span></button></figure>`;
 
+const fallbackTestimonials = [
+  {
+    client_name: "ENIVÈ Client",
+    quote: "The care felt unrushed, warm and completely tailored to me.",
+    rating: 5,
+    is_featured: true,
+  },
+  {
+    client_name: "ENIVÈ Client",
+    quote:
+      "The provider’s expertise and honesty truly set the experience apart.",
+    rating: 5,
+  },
+];
+const testimonialStory = (testimonial, index) => {
+  const quote = testimonial.quote || "A thoughtful, personal experience.";
+  const rating = Math.max(1, Math.min(5, Number(testimonial.rating) || 5));
+  const length = quote.length > 180 ? "long" : quote.length > 100 ? "medium" : "short";
+  return `<blockquote class="story-card story-${length}${testimonial.is_featured ? " featured-story" : ""}"><div class="story-card-top"><span class="story-number">${String(index + 1).padStart(2, "0")}</span><div class="stars" aria-label="${rating} out of 5 stars">${"★".repeat(rating)}</div></div><span class="story-quote-mark" aria-hidden="true">“</span><p>“${escapeHtml(quote)}”</p><footer><cite>— ${escapeHtml(testimonial.client_name || "ENIVÈ Client")}</cite><span>Published with approval</span></footer></blockquote>`;
+};
+
 function enhanceEditorialPage(root, view) {
   if (view === "gallery") {
     root.innerHTML = `<header class="gallery-hero gallery-hero-luxe"><div class="gallery-hero-copy"><p class="eyebrow">The ENIVÈ visual journal · 01</p><h1>A visual language<br><em>of considered care.</em></h1><p>Beauty, wellness and the quiet details between them—seen through the warm, refined point of view that shapes every ENIVÈ experience.</p><div class="gallery-hero-meta"><span>Modern aesthetics</span><span>Personal wellness</span><span>Sugar Land, Texas</span></div></div><div class="gallery-hero-collage"><figure class="gallery-hero-primary"><img src="/assets/images/home-concierge.webp" alt="Four women representing inclusive beauty" width="1299" height="1211"><figcaption>Beauty belongs to everyone.</figcaption></figure><figure class="gallery-hero-secondary"><img src="/assets/images/gallery-ritual-still-life.webp" alt="Considered wellness ritual in warm neutral tones" width="1024" height="1280"></figure><span class="gallery-hero-monogram" aria-hidden="true">É<small>Visual<br>journal</small></span></div></header><div class="gallery-signature-strip" aria-label="Gallery themes"><span>Beauty without a blueprint</span><i></i><span>Care with intention</span><i></i><span>Wellness, personally considered</span></div><section class="section gallery-journal gallery-journal-luxe"><div class="gallery-intro"><div><p class="eyebrow">Inside ENIVÈ · 02</p><h2>Moments that define<br><em>the experience.</em></h2></div><p>A living collection of natural beauty, clinical artistry, thoughtful environments and the rituals that make care feel personal.</p></div><div class="gallery-filter" id="gallery-filter" aria-label="Filter gallery"></div><div class="gallery-grid gallery-bento gallery-bento-luxe" id="gallery-grid">${galleryFallbackItems.map(galleryFigure).join("")}</div></section><section class="section gallery-results gallery-results-luxe"><div class="gallery-results-head"><div><p class="eyebrow">Client-approved outcomes · 03</p><h2>Real care.<br><em>Real results.</em></h2></div><p>Every result is personal. Images are shared for education and inspiration only when written client consent has been provided.</p></div><div class="before-after-grid" id="before-after-grid"><div class="gallery-empty gallery-empty-light"><span>THE RESULTS ARCHIVE</span><h3>Shown responsibly.<br>Shared intentionally.</h3><p>Approved before-and-after imagery will appear here as the collection grows.</p></div></div></section><section class="gallery-closing"><span class="brand-stamp" aria-hidden="true"><img src="/assets/images/brand/enive-logo.jpeg" alt="" width="90" height="90" loading="lazy"></span><p class="eyebrow">Begin your own experience</p><h2>See what thoughtful care<br><em>can feel like.</em></h2><a class="btn" href="${BOOKING_URL}" target="_blank" rel="noopener">Begin your consultation</a></section><dialog class="gallery-lightbox" id="gallery-lightbox" aria-label="Gallery image preview"><button type="button" data-lightbox-close aria-label="Close image preview">×</button><div data-lightbox-content></div></dialog>`;
@@ -977,8 +998,10 @@ function enhanceEditorialPage(root, view) {
     if (fallbackGrid)
       initGalleryExperience(fallbackGrid, galleryFallbackItems);
   }
-  if (view === "testimonials")
-    root.innerHTML = `<header class="stories-hero"><p class="eyebrow">Client stories</p><h1>Care that stays<br><em>with you.</em></h1><p>Honest words from people who chose thoughtful guidance, personalized care and a calmer kind of experience.</p><div class="stories-seal" aria-label="Published client stories"><strong data-testimonial-count>02</strong><span>Published<br>stories</span></div></header><section class="section stories-section"><div class="stories-intro"><div><p class="eyebrow">In their words</p><h2>The experience,<br><em>remembered.</em></h2></div><p>Each story is shared with approval. Individual experiences vary, and every care plan begins with a personal consultation.</p></div><div class="quotes stories-grid" id="testimonial-grid" aria-live="polite"><blockquote><div class="story-number">01</div><div class="stars">★★★★★</div><p>“The care felt unrushed, warm and completely tailored to me.”</p><cite>— ENIVÈ Client</cite></blockquote><blockquote><div class="story-number">02</div><div class="stars">★★★★★</div><p>“The provider’s expertise and honesty truly set the experience apart.”</p><cite>— ENIVÈ Client</cite></blockquote></div></section><section class="stories-close"><p class="eyebrow">Your story begins with clarity</p><h2>Feel heard before<br><em>you decide.</em></h2><a class="btn light" href="${BOOKING_URL}" target="_blank" rel="noopener">Book a consultation</a></section>`;
+  if (view === "testimonials") {
+    const featured = fallbackTestimonials[0];
+    root.innerHTML = `<header class="stories-hero stories-hero-luxe"><div class="stories-hero-copy"><p class="eyebrow">The ENIVÈ client journal · 01</p><h1>Care remembered.<br><em>Confidence shared.</em></h1><p>Honest reflections from people who experienced thoughtful guidance, personalized attention and a calmer standard of care.</p><a class="text-link" href="#client-stories">Read their stories <span aria-hidden="true">↓</span></a><div class="stories-hero-values" aria-label="Our testimonial standards"><span>Client-approved</span><i></i><span>Shared respectfully</span><i></i><span>Individual experiences</span></div></div><aside class="stories-spotlight" aria-label="Featured client story"><div class="stories-spotlight-top"><span>Featured reflection</span><div class="stars" data-featured-rating aria-label="5 out of 5 stars">★★★★★</div></div><span class="stories-spotlight-mark" aria-hidden="true">“</span><blockquote><p data-featured-quote>“${escapeHtml(featured.quote)}”</p><footer><cite data-featured-client>— ${escapeHtml(featured.client_name)}</cite><span>Published with approval</span></footer></blockquote></aside><div class="stories-seal" aria-label="Published client stories"><strong data-testimonial-count>02</strong><span>Published<br>stories</span></div></header><div class="stories-signature-strip" aria-label="ENIVÈ care values"><span>Listen first</span><i></i><span>Guide with clarity</span><i></i><span>Care without pressure</span></div><section class="section stories-section stories-section-luxe" id="client-stories"><div class="stories-intro"><div><p class="eyebrow">In their words · 02</p><h2>Every experience<br><em>is personal.</em></h2></div><p>These reflections are published with client approval. Results and experiences vary, and every recommendation begins with an appropriate provider consultation.</p></div><div class="quotes stories-grid stories-grid-luxe" id="testimonial-grid" aria-live="polite">${fallbackTestimonials.map(testimonialStory).join("")}</div></section><section class="stories-close stories-close-luxe"><span class="brand-stamp" aria-hidden="true"><img src="/assets/images/brand/enive-logo.jpeg" alt="" width="88" height="88" loading="lazy"></span><p class="eyebrow">Your experience begins with a conversation</p><h2>Feel heard.<br><em>Move with clarity.</em></h2><p>Bring your goals and questions. We’ll help you understand what feels right for you.</p><a class="btn light" href="${BOOKING_URL}" target="_blank" rel="noopener">Begin your consultation</a></section>`;
+  }
   if (view === "blog")
     root.innerHTML = `<header class="page-hero journal-hero"><p class="eyebrow">The ENIVÈ journal</p><h1>Read with<br><em>intention.</em></h1><p>Provider-led perspective on aesthetics, skin health and whole-person wellness—written to help you make informed choices.</p></header><section class="section journal-section"><div class="journal-intro"><div><p class="eyebrow">Ideas & guidance</p><h2>A thoughtful place<br><em>to learn.</em></h2></div><p>Explore clear, considered education before your consultation or return whenever a new question comes up.</p></div><nav class="journal-filter" id="blog-filter" aria-label="Filter journal articles" hidden></nav><div class="blog-grid journal-grid" id="blog-grid" aria-live="polite"><article class="journal-empty"><span aria-hidden="true">É</span><h3>The journal is being thoughtfully prepared.</h3><p>New provider-led articles will appear here as they are published.</p></article></div></section><section class="journal-close"><p class="eyebrow">Prefer a conversation?</p><h2>Bring us your<br><em>questions.</em></h2><a class="btn light" href="${BOOKING_URL}" target="_blank" rel="noopener">Book a consultation</a></section>`;
 }
@@ -1383,11 +1406,25 @@ async function hydratePublishedContent() {
     const quotes = document.querySelector("#testimonial-grid");
     if (quotes)
       quotes.innerHTML = publishedTestimonials
-        .map(
-          (t, i) =>
-            `<blockquote class="${t.is_featured ? "featured-story" : ""}"><div class="story-number">${String(i + 1).padStart(2, "0")}</div><div class="stars" aria-label="${t.rating || 5} out of 5 stars">${"★".repeat(t.rating || 5)}</div><p>“${escapeHtml(t.quote)}”</p><cite>— ${escapeHtml(t.client_name || "ENIVÈ Client")}</cite></blockquote>`,
-        )
+        .map(testimonialStory)
         .join("");
+    const featuredStory =
+      publishedTestimonials.find((testimonial) => testimonial.is_featured) ||
+      publishedTestimonials[0];
+    const featuredQuote = document.querySelector("[data-featured-quote]");
+    const featuredClient = document.querySelector("[data-featured-client]");
+    const featuredRating = document.querySelector("[data-featured-rating]");
+    if (featuredQuote) featuredQuote.textContent = `“${featuredStory.quote}”`;
+    if (featuredClient)
+      featuredClient.textContent = `— ${featuredStory.client_name || "ENIVÈ Client"}`;
+    if (featuredRating) {
+      const rating = Math.max(
+        1,
+        Math.min(5, Number(featuredStory.rating) || 5),
+      );
+      featuredRating.textContent = "★".repeat(rating);
+      featuredRating.setAttribute("aria-label", `${rating} out of 5 stars`);
+    }
     const count = document.querySelector("[data-testimonial-count]");
     if (count)
       count.textContent = String(publishedTestimonials.length).padStart(2, "0");
