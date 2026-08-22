@@ -6623,6 +6623,14 @@ body:not(.admin-body) .text-link {
     pointer-events: auto;
     transition-delay: 0s;
   }
+  body.menu-open .site-header {
+    z-index: 31;
+    border-color: transparent;
+    background: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
   .mobile-menu {
     inset: 27px 0.55rem auto;
     width: auto;
