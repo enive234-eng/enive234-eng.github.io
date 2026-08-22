@@ -55,7 +55,7 @@ if (header)
     )
     .join(
       "",
-    )}<details class="mobile-services-group"><summary>Services <span>+</span></summary><div>${services.map((service) => `<a href="/pages/services/${service.slug}.html">${service.name} <span>→</span></a>`).join("")}</div></details><a class="mobile-book" data-book href="${BOOKING_URL}" target="_blank" rel="noopener">Book a complimentary consultation <span>→</span></a><p class="mobile-menu-note">Wellness & Aesthetics · Sugar Land, Texas</p></div></header><a class="mobile-quick-book" data-book href="${BOOKING_URL}" target="_blank" rel="noopener"><span>Book consultation</span><span aria-hidden="true">→</span></a>`;
+    )}<details class="mobile-services-group"><summary><span class="mobile-services-index">07</span><span>Services</span><i aria-hidden="true">+</i></summary><div>${services.map((service) => `<a href="/pages/services/${service.slug}.html">${service.name} <span>→</span></a>`).join("")}</div></details><a class="mobile-book" data-book href="${BOOKING_URL}" target="_blank" rel="noopener"><span>Begin your consultation<small>Personalized, provider-led guidance</small></span><i aria-hidden="true">↗</i></a><p class="mobile-menu-note"><span>ENIVÈ Wellness & Aesthetics</span><span>Sugar Land · Greater Houston</span></p></div></header><button class="mobile-menu-backdrop" type="button" aria-label="Close menu" tabindex="-1"></button><a class="mobile-quick-book" data-book href="${BOOKING_URL}" target="_blank" rel="noopener"><span>Book consultation</span><span aria-hidden="true">→</span></a>`;
 if (footer)
   footer.innerHTML = `<footer class="site-footer footer-compact"><div class="footer-glow" aria-hidden="true"></div><section class="footer-compact-head" aria-labelledby="footer-heading"><div><p class="footer-kicker">Your care, beautifully considered</p><h2 id="footer-heading">Begin with confidence.<br><em>Leave feeling like you.</em></h2><p class="footer-intro">A calm, personal approach to aesthetics and wellness—guided by expertise, shaped around you.</p></div><a class="footer-book" data-book href="${BOOKING_URL}" target="_blank" rel="noopener"><span>Start your consultation</span><i aria-hidden="true">→</i></a></section><div class="footer-top"><div class="footer-about"><p class="footer-kicker">The ENIVÈ standard</p><p>Clinical expertise.<br><em>Boutique attention.</em></p><div class="footer-status"><i></i><span>Accepting appointments</span></div></div><nav class="footer-col" aria-label="Footer navigation"><h3>Explore</h3>${nav.map(([n, u], i) => `<a${i > 2 && i < 6 ? ' class="footer-secondary-link"' : ""} href="${u}">${n}${footerIcon("arrow")}</a>`).join("")}</nav><div class="footer-col"><h3>Visit</h3><p data-business-address>202 Industrial Boulevard<br>Suite 302<br>Sugar Land, TX 77478</p><a data-business-directions href="https://maps.google.com/?q=202+Industrial+Boulevard+Suite+302+Sugar+Land+TX+77478" target="_blank" rel="noopener">Get directions ${footerIcon("pin")}</a></div><div class="footer-col"><h3>Connect</h3><a data-business-phone href="tel:+18327798731">(832) 779-8731 ${footerIcon("phone")}</a><a data-business-email href="mailto:hello@enivewellness.com">Email our team ${footerIcon("mail")}</a><a href="https://instagram.com/enivewellness" target="_blank" rel="noopener">Instagram ${footerIcon("instagram")}</a></div></div><div class="footer-bottom"><span>© ${new Date().getFullYear()} ENIVÈ Wellness & Aesthetics</span><nav aria-label="Legal"><a href="/pages/legal/privacy-policy.html">Privacy</a><a href="/pages/legal/terms-and-conditions.html">Terms</a><a href="/pages/legal/cancellation-no-show-policy.html">Cancellations</a><a href="/pages/legal/refund-policy.html">Refunds</a><a href="/pages/legal/hipaa-privacy-notice.html">HIPAA</a><a href="/pages/legal/medical-disclaimer.html">Medical disclaimer</a></nav></div></footer>`;
 footer
@@ -84,10 +84,12 @@ document
 const siteHeader = document.querySelector(".site-header");
 if (siteHeader) {
   let headerTicking = false;
+  let headerIsCompact = scrollY > 72;
   const updateHeader = () => {
-    const isScrolled = scrollY > 18;
-    siteHeader.classList.toggle("is-scrolled", isScrolled);
-    header?.classList.toggle("is-scrolled", isScrolled);
+    if (!headerIsCompact && scrollY > 72) headerIsCompact = true;
+    else if (headerIsCompact && scrollY < 10) headerIsCompact = false;
+    siteHeader.classList.toggle("is-scrolled", headerIsCompact);
+    header?.classList.toggle("is-scrolled", headerIsCompact);
     headerTicking = false;
   };
   addEventListener(
@@ -150,7 +152,8 @@ document.addEventListener("click", (event) => {
   openServicesDirectory();
 });
 const mb = document.querySelector(".menu-btn"),
-  mobileMenu = document.querySelector("#mobile-menu");
+  mobileMenu = document.querySelector("#mobile-menu"),
+  mobileMenuBackdrop = document.querySelector(".mobile-menu-backdrop");
 let menuHideTimer;
 function setMenu(open) {
   if (!mobileMenu || !mb) return;
@@ -183,6 +186,7 @@ document.addEventListener("keydown", (e) => {
 mobileMenu?.addEventListener("click", (e) => {
   if (e.target.closest("a")) setMenu(false);
 });
+mobileMenuBackdrop?.addEventListener("click", () => setMenu(false));
 
 // Keep navigation easy to reach without leaving a full-screen panel in the way.
 // A deliberate scroll gesture dismisses the panel and returns to the compact header.
@@ -201,7 +205,7 @@ mobileMenu?.addEventListener(
     if (
       menuTouchStartY !== null &&
       currentY !== undefined &&
-      Math.abs(currentY - menuTouchStartY) > 12
+      Math.abs(currentY - menuTouchStartY) > 22
     ) {
       setMenu(false);
       menuTouchStartY = null;
@@ -209,6 +213,12 @@ mobileMenu?.addEventListener(
   },
   { passive: true },
 );
+mobileMenu?.addEventListener("touchend", () => {
+  menuTouchStartY = null;
+});
+mobileMenu?.addEventListener("touchcancel", () => {
+  menuTouchStartY = null;
+});
 mobileMenu?.addEventListener("wheel", () => setMenu(false), {
   passive: true,
   once: false,

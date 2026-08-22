@@ -2,6 +2,7 @@
 .premium-home {
   background: #f8f5ee;
 }
+
 .premium-home h2 em {
   font-weight: 400;
   color: var(--terra);
@@ -6593,5 +6594,180 @@ body:not(.admin-body) .text-link {
   }
   .stories-close h2 {
     font-size: clamp(3rem, 13vw, 3.8rem);
+  }
+}
+
+/* Branded mobile navigation drawer — transform-only motion keeps it fluid. */
+.mobile-menu-backdrop {
+  display: none;
+}
+@media (max-width: 700px) {
+  .mobile-menu-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 28;
+    display: block;
+    padding: 0;
+    border: 0;
+    background: rgba(39, 29, 25, 0.38);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition:
+      opacity 0.25s ease,
+      visibility 0s linear 0.3s;
+  }
+  body.menu-open .mobile-menu-backdrop {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition-delay: 0s;
+  }
+  .mobile-menu {
+    inset: 27px 0.55rem auto;
+    width: auto;
+    height: auto;
+    max-height: calc(100dvh - 35px);
+    padding: 5.5rem 1rem 1rem;
+    border: 1px solid rgba(77, 54, 43, 0.12);
+    border-radius: 0 0 1.35rem 1.35rem;
+    background:
+      radial-gradient(
+        circle at 100% 0,
+        rgba(184, 116, 86, 0.15),
+        transparent 18rem
+      ),
+      linear-gradient(155deg, #fffaf4 0%, #f2e8dc 100%);
+    box-shadow: 0 24px 65px rgba(47, 34, 28, 0.22);
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(173, 101, 79, 0.45) transparent;
+    contain: layout paint;
+    will-change: transform, opacity;
+  }
+  #site-header.is-scrolled .mobile-menu {
+    inset: 0 0.55rem auto;
+    height: auto;
+    max-height: calc(100dvh - 8px);
+    padding-top: 4.6rem;
+  }
+  .mobile-menu > .eyebrow {
+    padding: 0 0.35rem 0.8rem;
+    color: #9a6452;
+  }
+  .mobile-menu > a {
+    grid-template-columns: 2rem minmax(0, 1fr) 1.5rem;
+    min-height: 49px;
+    padding: 0.45rem 0.35rem;
+    font-size: clamp(1.35rem, 6.2vw, 1.72rem);
+    letter-spacing: -0.015em;
+    border-color: rgba(66, 48, 40, 0.12);
+    transition:
+      color 0.2s ease,
+      padding-left 0.2s ease;
+  }
+  .mobile-menu > a:active {
+    padding-left: 0.6rem;
+    color: var(--terra);
+  }
+  .mobile-menu > a small,
+  .mobile-services-index {
+    color: #b58369;
+    font: italic 0.62rem/1 var(--serif);
+  }
+  .mobile-menu > a > span {
+    justify-self: end;
+  }
+  .mobile-services-group summary {
+    display: grid;
+    grid-template-columns: 2rem minmax(0, 1fr) 1.5rem;
+    align-items: center;
+    min-height: 50px;
+    padding: 0.45rem 0.35rem;
+    font-size: clamp(1.35rem, 6.2vw, 1.72rem);
+    letter-spacing: -0.015em;
+  }
+  .mobile-services-group summary i {
+    justify-self: end;
+    color: var(--terra);
+    font: 400 1rem/1 var(--sans);
+    transition: transform 0.25s ease;
+  }
+  .mobile-services-group summary > span {
+    color: var(--ink);
+    transform: none !important;
+  }
+  .mobile-services-group summary > .mobile-services-index {
+    color: #b58369;
+  }
+  .mobile-services-group[open] summary i {
+    transform: rotate(45deg);
+  }
+  .mobile-services-group > div {
+    grid-template-columns: 1fr;
+    max-height: min(40dvh, 330px);
+    padding: 0.35rem 0.35rem 0.7rem 2.35rem;
+    overflow-y: auto;
+  }
+  .mobile-services-group a {
+    min-height: 40px;
+    color: #5e514a;
+    font-size: 0.64rem;
+    letter-spacing: 0.09em;
+  }
+  .mobile-menu .mobile-book {
+    display: flex;
+    min-height: 62px;
+    margin-top: 0.85rem;
+    padding: 0.75rem 0.8rem 0.75rem 1rem;
+    border-radius: 0.2rem;
+    background: #302723;
+  }
+  .mobile-menu .mobile-book > span {
+    display: grid;
+    gap: 0.18rem;
+    color: #fffaf4;
+    font: 600 0.58rem/1.25 var(--sans);
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+  }
+  .mobile-menu .mobile-book small {
+    color: rgba(255, 250, 244, 0.58);
+    font-size: 0.43rem;
+    font-style: normal;
+    letter-spacing: 0.09em;
+  }
+  .mobile-menu .mobile-book i {
+    display: grid;
+    width: 34px;
+    height: 34px;
+    place-items: center;
+    border-radius: 50%;
+    background: #e0c99d;
+    color: #302723;
+    font: 400 0.9rem/1 var(--sans);
+  }
+  .mobile-menu-note {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-top: 0.8rem;
+    padding: 0.75rem 0.35rem 0;
+    border-top: 1px solid rgba(66, 48, 40, 0.1);
+    font-size: 0.42rem;
+    line-height: 1.45;
+  }
+  .mobile-menu-note span:last-child {
+    text-align: right;
+  }
+}
+@media (max-width: 700px) and (prefers-reduced-motion: reduce) {
+  .mobile-menu,
+  .mobile-menu-backdrop,
+  .announcement,
+  .nav,
+  #site-header .brand,
+  .menu-btn {
+    transition: none !important;
   }
 }
