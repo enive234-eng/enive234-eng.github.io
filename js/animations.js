@@ -24,6 +24,15 @@ const SOLO_SELECTORS = [
   ".promotion-feature>img",
   ".promotion-feature>div",
   ".services-hero-visual",
+  ".gallery-hero-copy",
+  ".gallery-hero-collage",
+  ".stories-hero-copy",
+  ".stories-spotlight",
+  ".about-hero-copy",
+  ".about-hero-image",
+  ".provider-signature-photo",
+  ".provider-signature-intro",
+  ".journal-intro",
   ".detail-hero-copy",
   ".page-hero .eyebrow",
   ".page-hero h1",
@@ -230,19 +239,27 @@ function initButtonInteractions() {
   });
 
   if (!finePointer || reduceMotion) return;
-  const MAGNETIC_SELECTOR = ".btn, .pathway";
-  let current = null;
+  const MAGNETIC_SELECTOR = ".btn";
+  let current = null,
+    pointerFrame = 0,
+    pointerEvent = null;
   document.addEventListener("pointermove", (e) => {
-    const el = e.target.closest(MAGNETIC_SELECTOR);
-    if (el !== current) {
-      if (current) current.style.transform = "";
-      current = el;
-    }
-    if (!el) return;
-    const rect = el.getBoundingClientRect();
-    const dx = (e.clientX - rect.left - rect.width / 2) / rect.width;
-    const dy = (e.clientY - rect.top - rect.height / 2) / rect.height;
-    el.style.transform = `translate(${dx * 6}px, ${dy * 6}px)`;
+    pointerEvent = e;
+    if (pointerFrame) return;
+    pointerFrame = requestAnimationFrame(() => {
+      const el = pointerEvent?.target.closest(MAGNETIC_SELECTOR);
+      if (el !== current) {
+        if (current) current.style.transform = "";
+        current = el;
+      }
+      if (el) {
+        const rect = el.getBoundingClientRect();
+        const dx = (pointerEvent.clientX - rect.left - rect.width / 2) / rect.width;
+        const dy = (pointerEvent.clientY - rect.top - rect.height / 2) / rect.height;
+        el.style.transform = `translate3d(${(dx * 3).toFixed(1)}px, ${(dy * 3).toFixed(1)}px, 0)`;
+      }
+      pointerFrame = 0;
+    });
   });
   document.addEventListener(
     "pointerleave",

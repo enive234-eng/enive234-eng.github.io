@@ -18,6 +18,26 @@ import {
 import { initAnimations } from "./animations.js";
 const header = document.querySelector("#site-header"),
   footer = document.querySelector("#site-footer");
+
+if (!document.querySelector('meta[name="theme-color"]')) {
+  const theme = document.createElement("meta");
+  theme.name = "theme-color";
+  theme.content = "#9b6a5c";
+  document.head.appendChild(theme);
+}
+if (!document.querySelector('link[rel~="icon"]')) {
+  const icon = document.createElement("link");
+  icon.rel = "icon";
+  icon.type = "image/jpeg";
+  icon.href = "/assets/images/brand/enive-logo.jpeg";
+  document.head.appendChild(icon);
+}
+if (!document.querySelector('link[rel="apple-touch-icon"]')) {
+  const touchIcon = document.createElement("link");
+  touchIcon.rel = "apple-touch-icon";
+  touchIcon.href = "/assets/images/brand/enive-logo.jpeg";
+  document.head.appendChild(touchIcon);
+}
 if (document.querySelector(".service-detail"))
   document.body.classList.add("service-detail-page");
 const footerIcon = (kind) => {
@@ -47,7 +67,7 @@ if (header)
     .map(([n, u]) => `<a href="${u}">${n}</a>`)
     .join(
       "",
-    )}</div><a class="book-link" data-book href="${BOOKING_URL}" target="_blank" rel="noopener">Book a consultation →</a><button class="menu-btn" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu"><span></span><span></span><span></span></button></div></nav><div class="services-mega-menu" id="services-menu" hidden><nav aria-label="Service pages">${services.map((service) => `<a href="/pages/services/${service.slug}.html"><span>${service.name}</span><i aria-hidden="true">→</i></a>`).join("")}</nav></div></header><div class="mobile-menu" id="mobile-menu" hidden><div class="mobile-menu-top"><a class="mobile-menu-brand" href="/" aria-label="ENIVÈ home"><img src="/assets/images/brand/enive-logo.jpeg" alt="" width="44" height="44"></a><div><span>ENIVÈ</span><small>Wellness & Aesthetics</small></div><button class="mobile-menu-close" type="button" data-menu-close aria-label="Close menu"><span></span><span></span></button></div><div class="mobile-menu-intro"><p class="eyebrow">The ENIVÈ experience</p><p>Care, <em>beautifully considered.</em></p></div><nav class="mobile-menu-links" aria-label="Mobile navigation">${nav
+    )}</div><a class="book-link" data-book href="${BOOKING_URL}" target="_blank" rel="noopener">Book a consultation →</a><button class="menu-btn" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu"><span></span><span></span><span></span></button></div></nav><div class="services-mega-menu" id="services-menu" hidden><nav aria-label="Service pages">${services.map((service) => `<a href="/pages/services/${service.slug}.html"><span>${service.name}</span><i aria-hidden="true">→</i></a>`).join("")}</nav></div></header><div class="mobile-menu" id="mobile-menu" aria-hidden="true" hidden><div class="mobile-menu-top"><a class="mobile-menu-brand" href="/" aria-label="ENIVÈ home"><img src="/assets/images/brand/enive-logo.jpeg" alt="" width="44" height="44"></a><div><span>ENIVÈ</span><small>Wellness & Aesthetics</small></div><button class="mobile-menu-close" type="button" data-menu-close aria-label="Close menu"><span></span><span></span></button></div><div class="mobile-menu-intro"><p class="eyebrow">The ENIVÈ experience</p><p>Care, <em>beautifully considered.</em></p></div><nav class="mobile-menu-links" aria-label="Mobile navigation">${nav
     .filter(([n]) => n !== "Services")
     .map(
       ([n, u], i) =>
@@ -134,7 +154,7 @@ document.addEventListener("keydown", (event) => {
   }
 });
 function openServicesDirectory() {
-  if (matchMedia("(max-width: 1000px)").matches) {
+  if (matchMedia("(max-width: 1180px)").matches) {
     setMenu(true);
     const mobileServices = document.querySelector(".mobile-services-group");
     if (mobileServices) mobileServices.open = true;
@@ -154,10 +174,22 @@ document.addEventListener("click", (event) => {
 const mb = document.querySelector(".menu-btn"),
   mobileMenu = document.querySelector("#mobile-menu"),
   mobileMenuBackdrop = document.querySelector(".mobile-menu-backdrop"),
-  mobileMenuClose = document.querySelector("[data-menu-close]");
+  mobileMenuClose = document.querySelector("[data-menu-close]"),
+  pageMain = document.querySelector("main"),
+  pageFooter = document.querySelector("#site-footer");
 let menuHideTimer,
   menuOpenedAt = 0,
   menuOpenedScrollY = 0;
+const menuFocusable = () =>
+  mobileMenu
+    ? [
+        ...mobileMenu.querySelectorAll(
+          'a[href],button:not([disabled]),summary,[tabindex]:not([tabindex="-1"])',
+        ),
+      ].filter(
+        (element) => !element.hidden && element.getClientRects().length > 0,
+      )
+    : [];
 function setMenu(open) {
   if (!mobileMenu || !mb) return;
   clearTimeout(menuHideTimer);
@@ -165,14 +197,21 @@ function setMenu(open) {
     menuOpenedAt = performance.now();
     menuOpenedScrollY = scrollY;
     mobileMenu.hidden = false;
-    requestAnimationFrame(() => mobileMenu.classList.add("open"));
+    mobileMenu.setAttribute("aria-hidden", "false");
+    requestAnimationFrame(() => {
+      mobileMenu.classList.add("open");
+      (mobileMenuClose || menuFocusable()[0])?.focus({ preventScroll: true });
+    });
   } else {
     mobileMenu.classList.remove("open");
+    mobileMenu.setAttribute("aria-hidden", "true");
     menuHideTimer = setTimeout(() => {
       mobileMenu.hidden = true;
     }, 280);
   }
   document.body.classList.toggle("menu-open", open);
+  if (pageMain) pageMain.inert = open;
+  if (pageFooter) pageFooter.inert = open;
   document
     .querySelector(".mobile-quick-book")
     ?.setAttribute("aria-hidden", String(open));
@@ -186,6 +225,25 @@ document.addEventListener("keydown", (e) => {
   if (e.key === "Escape" && mobileMenu && !mobileMenu.hidden) {
     setMenu(false);
     mb.focus();
+    return;
+  }
+  if (
+    e.key === "Tab" &&
+    mobileMenu &&
+    !mobileMenu.hidden &&
+    mb?.getAttribute("aria-expanded") === "true"
+  ) {
+    const focusable = menuFocusable();
+    if (!focusable.length) return;
+    const first = focusable[0],
+      last = focusable[focusable.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
   }
 });
 mobileMenu?.addEventListener("click", (e) => {
@@ -251,7 +309,7 @@ addEventListener(
 );
 addEventListener("resize", () => {
   if (
-    innerWidth > 1000 &&
+    innerWidth > 1180 &&
     mb?.getAttribute("aria-expanded") === "true"
   )
     setMenu(false);

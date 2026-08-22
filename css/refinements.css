@@ -1,0 +1,600 @@
+/*
+ * ENIVÈ final refinement layer
+ * Shared responsive, accessibility and interaction corrections live here so
+ * the established page art direction remains intact and predictable.
+ */
+
+:root {
+  --site-max: 1680px;
+  --tap-size: 46px;
+}
+
+html {
+  overflow-x: clip;
+  scroll-padding-top: 118px;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body:not(.admin-body) {
+  overflow-x: clip;
+  text-rendering: optimizeLegibility;
+}
+
+body:not(.admin-body) main {
+  min-width: 0;
+}
+
+body:not(.admin-body) :is(h1, h2, h3) {
+  text-wrap: balance;
+}
+
+body:not(.admin-body) :is(p, li, blockquote) {
+  text-wrap: pretty;
+}
+
+body:not(.admin-body) :is(a, button, summary) {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+body:not(.admin-body) :is(.btn, .book-link, .text-link) {
+  min-height: var(--tap-size);
+}
+
+body:not(.admin-body) img {
+  color: transparent;
+}
+
+.section > :where(.section-head, .services-directory-head),
+.content-shell,
+.blog-post-body {
+  margin-inline: auto;
+}
+
+.scroll-progress {
+  height: 2px;
+  background: linear-gradient(90deg, #b2674e, #d49a7b);
+}
+
+/* Compact laptops and iPad landscape need the menu before the desktop links
+   become crowded. */
+@media (max-width: 1180px) {
+  .nav {
+    grid-template-columns: 1fr auto;
+  }
+
+  .nav > .nav-links,
+  .nav-right > .nav-links,
+  .book-link {
+    display: none;
+  }
+
+  #site-header .brand {
+    grid-column: 1;
+    justify-self: start;
+  }
+
+  .nav-right {
+    grid-column: 2;
+  }
+
+  .menu-btn {
+    position: relative;
+    display: grid;
+    width: 46px;
+    height: 46px;
+    place-items: center;
+    padding: 0;
+    border: 1px solid rgba(55, 43, 36, 0.18);
+    border-radius: 50%;
+    background: rgba(255, 253, 249, 0.64);
+  }
+
+  .menu-btn span {
+    position: absolute;
+    left: 50%;
+    width: 14px;
+    height: 1px;
+    border-radius: 999px;
+    background: var(--ink);
+    transform: translateX(-50%);
+    transform-origin: center;
+    transition:
+      top 0.26s ease,
+      width 0.26s ease,
+      opacity 0.18s ease,
+      transform 0.26s ease;
+  }
+
+  .menu-btn span:nth-child(1) {
+    top: calc(50% - 6px);
+  }
+
+  .menu-btn span:nth-child(2) {
+    top: 50%;
+    width: 19px;
+    background: var(--terra);
+  }
+
+  .menu-btn span:nth-child(3) {
+    top: calc(50% + 6px);
+  }
+
+  .menu-btn[aria-expanded="true"] span:nth-child(1) {
+    top: 50%;
+    width: 18px;
+    transform: translateX(-50%) rotate(45deg);
+  }
+
+  .menu-btn[aria-expanded="true"] span:nth-child(2) {
+    width: 0;
+    opacity: 0;
+  }
+
+  .menu-btn[aria-expanded="true"] span:nth-child(3) {
+    top: 50%;
+    width: 18px;
+    transform: translateX(-50%) rotate(-45deg);
+  }
+}
+
+/* Purpose-built tablet drawer. Phones retain the more immersive full-screen
+   composition already established in premium.css. */
+@media (min-width: 701px) and (max-width: 1180px) {
+  body.menu-open {
+    overflow: hidden;
+  }
+
+  .mobile-menu-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 28;
+    display: block;
+    padding: 0;
+    border: 0;
+    background: rgba(39, 29, 25, 0.46);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition:
+      opacity 0.25s ease,
+      visibility 0s linear 0.3s;
+  }
+
+  body.menu-open .mobile-menu-backdrop {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition-delay: 0s;
+  }
+
+  .mobile-menu {
+    position: fixed;
+    z-index: 30;
+    inset: 0 0 0 auto;
+    display: flex;
+    width: min(520px, 78vw);
+    height: 100dvh;
+    flex-direction: column;
+    padding: 1.15rem;
+    overflow-y: auto;
+    border: 0;
+    background:
+      radial-gradient(circle at 100% 0, rgba(193, 116, 83, 0.16), transparent 22rem),
+      #f4eade;
+    box-shadow: -28px 0 80px rgba(44, 30, 24, 0.25);
+    opacity: 0;
+    visibility: hidden;
+    transform: translate3d(24px, 0, 0);
+    transition:
+      opacity 0.24s ease,
+      transform 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+      visibility 0s linear 0.32s;
+  }
+
+  .mobile-menu.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translate3d(0, 0, 0);
+    transition-delay: 0s;
+  }
+
+  .mobile-menu-top {
+    display: grid;
+    grid-template-columns: 52px minmax(0, 1fr) 46px;
+    align-items: center;
+    gap: 0.85rem;
+    padding-bottom: 0.85rem;
+  }
+
+  .mobile-menu-brand {
+    width: 50px;
+    height: 50px;
+    overflow: hidden;
+    border-radius: 50%;
+    box-shadow: 0 9px 22px rgba(96, 55, 38, 0.14);
+  }
+
+  .mobile-menu-brand img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .mobile-menu-top > div {
+    display: grid;
+    gap: 0.14rem;
+  }
+
+  .mobile-menu-top > div span {
+    font: 500 1.2rem/1 var(--serif);
+    letter-spacing: 0.17em;
+  }
+
+  .mobile-menu-top > div small {
+    color: #967568;
+    font-size: 0.48rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .mobile-menu-close {
+    position: relative;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 1px solid rgba(70, 48, 39, 0.18);
+    border-radius: 50%;
+    background: rgba(255, 252, 247, 0.74);
+  }
+
+  .mobile-menu-close span {
+    position: absolute;
+    top: 21px;
+    left: 12px;
+    width: 18px;
+    height: 1px;
+    background: #342925;
+  }
+
+  .mobile-menu-close span:first-child {
+    transform: rotate(45deg);
+  }
+
+  .mobile-menu-close span:last-child {
+    transform: rotate(-45deg);
+  }
+
+  .mobile-menu-intro {
+    position: relative;
+    overflow: hidden;
+    padding: 1.2rem 1.25rem;
+    border-radius: 1rem;
+    background: #332824;
+    color: #fffaf4;
+  }
+
+  .mobile-menu-intro .eyebrow {
+    margin: 0 0 0.35rem;
+    color: #d9aa92;
+  }
+
+  .mobile-menu-intro > p:last-child {
+    margin: 0;
+    font: 500 1.8rem/1 var(--serif);
+  }
+
+  .mobile-menu-intro em {
+    color: #db987c;
+    font-weight: 400;
+  }
+
+  .mobile-menu-links {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.55rem;
+    margin-top: 0.65rem;
+  }
+
+  .mobile-menu-links a {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto 1fr;
+    min-height: 82px;
+    padding: 0.8rem;
+    border: 1px solid rgba(79, 53, 43, 0.1);
+    border-radius: 0.8rem;
+    background: rgba(255, 252, 247, 0.64);
+  }
+
+  .mobile-menu-links a small {
+    color: #b17962;
+    font: italic 0.55rem/1 var(--serif);
+  }
+
+  .mobile-menu-links a strong {
+    align-self: end;
+    font: 500 1.3rem/1 var(--serif);
+  }
+
+  .mobile-menu-links a > .footer-link-icon {
+    grid-column: 2;
+    grid-row: 1 / 3;
+    align-self: end;
+  }
+
+  .mobile-menu .footer-link-icon {
+    display: grid;
+    width: 1.55rem;
+    height: 1.55rem;
+    place-items: center;
+    border: 1px solid rgba(184, 111, 85, 0.28);
+    border-radius: 50%;
+    color: #a75f48;
+  }
+
+  .mobile-menu .footer-link-icon svg {
+    width: 0.72rem;
+    height: 0.72rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.7;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transform: rotate(-45deg);
+  }
+
+  .mobile-services-group {
+    margin-top: 0.6rem;
+    border: 0;
+    border-radius: 0.8rem;
+    background: #e8d5c7;
+  }
+
+  .mobile-services-group summary {
+    display: grid;
+    grid-template-columns: 2rem minmax(0, 1fr) 1.5rem;
+    align-items: center;
+    min-height: 54px;
+    padding: 0.7rem 0.85rem;
+    font-size: 1.2rem;
+  }
+
+  .mobile-services-group summary i {
+    justify-self: end;
+    color: #a75f48;
+    font: 400 1rem/1 var(--sans);
+  }
+
+  .mobile-services-group > div {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    max-height: 30dvh;
+    padding: 0 0.85rem 0.75rem 3rem;
+    overflow-y: auto;
+  }
+
+  .mobile-services-group a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 40px;
+    border-bottom: 1px solid rgba(71, 48, 39, 0.11);
+    color: #5e514a;
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .mobile-menu .mobile-book {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 60px;
+    margin-top: 0.65rem;
+    padding: 0.75rem 0.75rem 0.75rem 1rem;
+    border-radius: 0.8rem;
+    background: #302723;
+    color: #fffaf4;
+    box-shadow: 0 12px 30px rgba(48, 39, 35, 0.16);
+  }
+
+  .mobile-menu .mobile-book > span {
+    display: grid;
+    gap: 0.18rem;
+    font: 600 0.62rem/1.25 var(--sans);
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+  }
+
+  .mobile-menu .mobile-book small {
+    color: rgba(255, 250, 244, 0.58);
+    font-size: 0.46rem;
+    font-style: normal;
+  }
+
+  .mobile-menu .mobile-book .footer-link-icon {
+    width: 34px;
+    height: 34px;
+    border-color: rgba(255, 255, 255, 0.42);
+    background: #e0c99d;
+    color: #302723;
+  }
+
+  .mobile-menu-note {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: auto;
+    padding: 1rem 0.45rem 0;
+    color: #8a7065;
+    font-size: 0.48rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .mobile-menu-note span:last-child {
+    text-align: right;
+  }
+}
+
+/* Prevent the most editorial split heroes from crossing their minimum column
+   widths on iPad landscape and compact laptops. */
+@media (min-width: 701px) and (max-width: 1100px) {
+  .gallery-hero-luxe,
+  .stories-hero-luxe {
+    grid-template-columns: 1fr;
+  }
+
+  .gallery-hero-luxe {
+    padding-right: var(--pad);
+  }
+
+  .gallery-hero-collage {
+    width: min(100%, 760px);
+    min-height: 620px;
+    margin-inline: auto;
+  }
+
+  .stories-hero-luxe .stories-seal {
+    right: var(--pad);
+  }
+}
+
+@media (max-width: 700px) {
+  html {
+    scroll-padding-top: 74px;
+  }
+
+  body:not(.admin-body) {
+    min-width: 0;
+    font-size: 15px;
+  }
+
+  body:not(.admin-body) :is(.eyebrow, .footer-kicker) {
+    line-height: 1.55;
+  }
+
+  .mobile-quick-book {
+    right: var(--pad);
+    bottom: max(0.7rem, env(safe-area-inset-bottom));
+    left: var(--pad);
+    width: auto;
+    min-height: 58px;
+    padding: 0.9rem 0.95rem 0.9rem 1.1rem;
+    border-radius: 999px;
+    transform: translateY(calc(100% + 2rem));
+  }
+
+  .quick-book-visible .mobile-quick-book {
+    transform: translateY(0);
+  }
+
+  .service-experience-image {
+    height: auto;
+    aspect-ratio: 4 / 5;
+  }
+
+  .service-detail[data-service="injectables"] .service-experience-image,
+  .service-detail[data-service="consultations"] .service-experience-image,
+  .service-detail[data-service="iv-hydration"] .service-experience-image,
+  .service-detail[data-service="peptide-therapy"] .service-experience-image {
+    height: auto;
+    aspect-ratio: 4 / 3;
+  }
+
+  .service-experience-image img {
+    object-position: center;
+  }
+
+  .service-detail[data-service="injectables"] .service-experience-image img {
+    object-position: center 54%;
+  }
+
+  .service-summary-panel,
+  .service-experience-image {
+    max-width: 640px;
+  }
+
+  .service-how > p:not(.eyebrow),
+  .service-faq-editorial .faq p,
+  .contact-grid p,
+  .journal-card-copy > p {
+    line-height: 1.7;
+  }
+
+  .gallery-lightbox > button,
+  .mobile-menu-close,
+  .menu-btn {
+    min-width: 44px;
+    min-height: 44px;
+  }
+}
+
+@media (max-width: 520px) {
+  .service-benefit-row {
+    grid-template-columns: 1fr;
+  }
+
+  .service-benefit-row article,
+  .service-benefit-row article:last-child:nth-child(odd) {
+    grid-column: 1;
+    min-height: 0;
+  }
+
+  .service-summary-list {
+    grid-template-columns: 1fr;
+  }
+
+  .service-summary-list > div {
+    min-height: 58px;
+  }
+
+  .footer-compact .footer-top {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-compact .footer-col,
+  .footer-compact .footer-about,
+  .footer-compact .footer-top nav {
+    grid-column: 1;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .mobile-menu-links a,
+  .story-card,
+  .journal-card,
+  .service-row {
+    transition:
+      transform 0.3s var(--ease-out),
+      border-color 0.3s ease,
+      box-shadow 0.3s ease;
+  }
+
+  .mobile-menu-links a:hover,
+  .story-card:hover,
+  .journal-card:hover,
+  .service-row:hover {
+    border-color: rgba(168, 95, 70, 0.3);
+    box-shadow: 0 20px 46px rgba(52, 37, 30, 0.08);
+    transform: translateY(-3px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *:before,
+  *:after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
