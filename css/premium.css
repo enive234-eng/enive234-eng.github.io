@@ -5817,19 +5817,80 @@ body:not(.admin-body) .text-link {
     padding-block: var(--section-space);
   }
   .announcement {
+    height: 30px;
     min-height: 30px;
     padding-inline: 0.9rem;
     font-size: 0.46rem;
     letter-spacing: 0.105em;
+    opacity: 1;
+    transition:
+      height 0.32s ease,
+      min-height 0.32s ease,
+      padding 0.32s ease,
+      opacity 0.2s ease;
   }
   .nav {
     height: 66px;
     padding-inline: var(--pad);
+    transition: height 0.32s ease;
   }
   #site-header .brand {
     width: 50px;
     height: 50px;
     box-shadow: 0 8px 22px rgba(74, 45, 34, 0.1);
+    transition:
+      width 0.32s ease,
+      height 0.32s ease,
+      box-shadow 0.32s ease;
+  }
+  .menu-btn {
+    transition:
+      width 0.32s ease,
+      height 0.32s ease,
+      border-color 0.25s ease,
+      background 0.25s ease;
+  }
+  .mobile-menu {
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-14px) scale(0.99);
+    transform-origin: top center;
+    transition:
+      opacity 0.24s ease,
+      transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+      visibility 0s linear 0.28s;
+  }
+  .mobile-menu.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+    transition-delay: 0s;
+  }
+  #site-header.is-scrolled .announcement {
+    height: 0;
+    min-height: 0;
+    padding-block: 0;
+    opacity: 0;
+  }
+  #site-header.is-scrolled .nav {
+    height: 54px;
+  }
+  #site-header.is-scrolled .brand {
+    width: 40px;
+    height: 40px;
+    box-shadow: 0 5px 15px rgba(74, 45, 34, 0.08);
+  }
+  #site-header.is-scrolled .menu-btn {
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 253, 249, 0.72);
+  }
+  #site-header.is-scrolled .mobile-menu {
+    inset: 0;
+    height: 100dvh;
+    padding-top: 4.7rem;
   }
 
   .hero-premium .hero-image img,

@@ -85,7 +85,9 @@ const siteHeader = document.querySelector(".site-header");
 if (siteHeader) {
   let headerTicking = false;
   const updateHeader = () => {
-    siteHeader.classList.toggle("is-scrolled", scrollY > 18);
+    const isScrolled = scrollY > 18;
+    siteHeader.classList.toggle("is-scrolled", isScrolled);
+    header?.classList.toggle("is-scrolled", isScrolled);
     headerTicking = false;
   };
   addEventListener(
@@ -149,10 +151,19 @@ document.addEventListener("click", (event) => {
 });
 const mb = document.querySelector(".menu-btn"),
   mobileMenu = document.querySelector("#mobile-menu");
+let menuHideTimer;
 function setMenu(open) {
   if (!mobileMenu || !mb) return;
-  mobileMenu.hidden = !open;
-  mobileMenu.classList.toggle("open", open);
+  clearTimeout(menuHideTimer);
+  if (open) {
+    mobileMenu.hidden = false;
+    requestAnimationFrame(() => mobileMenu.classList.add("open"));
+  } else {
+    mobileMenu.classList.remove("open");
+    menuHideTimer = setTimeout(() => {
+      mobileMenu.hidden = true;
+    }, 280);
+  }
   document.body.classList.toggle("menu-open", open);
   document
     .querySelector(".mobile-quick-book")
@@ -160,7 +171,9 @@ function setMenu(open) {
   mb.setAttribute("aria-expanded", String(open));
   mb.setAttribute("aria-label", open ? "Close menu" : "Open menu");
 }
-mb?.addEventListener("click", () => setMenu(mobileMenu.hidden));
+mb?.addEventListener("click", () =>
+  setMenu(mb.getAttribute("aria-expanded") !== "true"),
+);
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape" && mobileMenu && !mobileMenu.hidden) {
     setMenu(false);
@@ -169,6 +182,50 @@ document.addEventListener("keydown", (e) => {
 });
 mobileMenu?.addEventListener("click", (e) => {
   if (e.target.closest("a")) setMenu(false);
+});
+
+// Keep navigation easy to reach without leaving a full-screen panel in the way.
+// A deliberate scroll gesture dismisses the panel and returns to the compact header.
+let menuTouchStartY = null;
+mobileMenu?.addEventListener(
+  "touchstart",
+  (event) => {
+    menuTouchStartY = event.touches[0]?.clientY ?? null;
+  },
+  { passive: true },
+);
+mobileMenu?.addEventListener(
+  "touchmove",
+  (event) => {
+    const currentY = event.touches[0]?.clientY;
+    if (
+      menuTouchStartY !== null &&
+      currentY !== undefined &&
+      Math.abs(currentY - menuTouchStartY) > 12
+    ) {
+      setMenu(false);
+      menuTouchStartY = null;
+    }
+  },
+  { passive: true },
+);
+mobileMenu?.addEventListener("wheel", () => setMenu(false), {
+  passive: true,
+  once: false,
+});
+addEventListener(
+  "scroll",
+  () => {
+    if (mb?.getAttribute("aria-expanded") === "true") setMenu(false);
+  },
+  { passive: true },
+);
+addEventListener("resize", () => {
+  if (
+    innerWidth > 1000 &&
+    mb?.getAttribute("aria-expanded") === "true"
+  )
+    setMenu(false);
 });
 if (new URLSearchParams(location.search).get("services") === "open") {
   openServicesDirectory();
