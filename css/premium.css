@@ -85,6 +85,15 @@
   font: italic 2rem var(--serif);
   box-shadow: 0 15px 40px #302b2030;
 }
+.hero-seal-logo {
+  overflow: hidden;
+  border: 1px solid rgba(255, 250, 244, 0.48);
+  background-color: #d17b55;
+  background-image: url("/assets/images/brand/enive-logo.jpeg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 145%;
+}
 .hero-seal small {
   font: 500 0.43rem/1.4 var(--sans);
   letter-spacing: 0.12em;
